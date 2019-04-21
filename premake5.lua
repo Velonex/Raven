@@ -11,6 +11,7 @@ workspace "NightFall"
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 IncludeDir = {}
+IncludeDir["spdlog"] = "NightFall/vendor/spdlog/include"
 
 project "NightFall"
 	location "NightFall"
@@ -28,7 +29,8 @@ project "NightFall"
 	}
 	includedirs
 	{
-		"%{prj.name}/src"
+		"%{prj.name}/src",
+		"%{IncludeDir.spdlog}"
 	}
 	
 	filter "system:windows"
@@ -72,6 +74,7 @@ project "TestApp"
 	{
 		"%{prj.name}/src",
 		"NightFall/src",
+		"%{IncludeDir.spdlog}"
 	}
 	links
 	{

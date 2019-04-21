@@ -1,0 +1,3 @@
+[submodule "NightFall/vendor/spdlog"]
+	path = NightFall/vendor/spdlog
+	url = https://github.com/gabime/spdlog
