@@ -5,3 +5,4 @@ bin-int/
 *.sln
 *.vcxproj
 *.filter
+*.filters
