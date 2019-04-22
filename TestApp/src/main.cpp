@@ -25,5 +25,6 @@ TestApp app;
 int main() {
 	app.setInstance(&app);
 	app.init((char*)"TestApp");
-
+	app.run();
+	return app.quit();
 }

@@ -20,4 +20,12 @@
 // Datatypes
 #include <NightFall/datatypes/ArrayList.h>
 
+// Window
+#include <NightFall/application/Window.h>
+
+// Input
+#include <NightFall/application/Input.h>
+#include <NightFall/application/KeyCodes.h>
+#include <NightFall/application/MouseCodes.h>
+
 #endif

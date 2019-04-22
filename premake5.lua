@@ -12,6 +12,11 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 IncludeDir = {}
 IncludeDir["spdlog"] = "NightFall/vendor/spdlog/include"
+IncludeDir["GLFW"] = "NightFall/vendor/GLFW/include"
+IncludeDir["Glad"] = "NightFall/vendor/glad/include"
+
+include "NightFall/vendor/GLFW"
+include "NightFall/vendor/glad"
 
 project "NightFall"
 	location "NightFall"
@@ -30,9 +35,15 @@ project "NightFall"
 	includedirs
 	{
 		"%{prj.name}/src",
-		"%{IncludeDir.spdlog}"
+		"%{IncludeDir.spdlog}",
+		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.Glad}"
 	}
-	
+	links
+	{
+		"GLFW",
+		"Glad"
+	}
 	filter "system:windows"
 		systemversion "latest"
 		
@@ -74,7 +85,9 @@ project "TestApp"
 	{
 		"%{prj.name}/src",
 		"NightFall/src",
-		"%{IncludeDir.spdlog}"
+		"%{IncludeDir.spdlog}",
+		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.Glad}"
 	}
 	links
 	{
