@@ -2,6 +2,7 @@
 #define NIGHTFALLAPPLICATION_H_
 #include <NightFall/event/EventHandler.h>
 #include <NightFall/application/Window.h>
+#include <NightFall/layers/LayerStack.h>
 
 namespace nfe {
 	class NightFallApplication : public EventListener
@@ -24,6 +25,7 @@ namespace nfe {
 	private:
 		EventHandler* _eventHandler;
 		Window* _window;
+		LayerStack* _layerStack;
 		bool _running = true;;
 	};
 }
