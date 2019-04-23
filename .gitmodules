@@ -4,3 +4,6 @@
 [submodule "NightFall/vendor/GLFW"]
 	path = NightFall/vendor/GLFW
 	url = https://github.com/Velonex/glfw
+[submodule "NightFall/vendor/ImGui"]
+	path = NightFall/vendor/ImGui
+	url = https://github.com/Velonex/imgui

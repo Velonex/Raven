@@ -14,9 +14,11 @@ IncludeDir = {}
 IncludeDir["spdlog"] = "NightFall/vendor/spdlog/include"
 IncludeDir["GLFW"] = "NightFall/vendor/GLFW/include"
 IncludeDir["Glad"] = "NightFall/vendor/glad/include"
+IncludeDir["ImGui"] = "NightFall/vendor/ImGui"
 
 include "NightFall/vendor/GLFW"
 include "NightFall/vendor/glad"
+include "NightFall/vendor/ImGui"
 
 project "NightFall"
 	location "NightFall"
@@ -37,7 +39,8 @@ project "NightFall"
 		"%{prj.name}/src",
 		"%{IncludeDir.spdlog}",
 		"%{IncludeDir.GLFW}",
-		"%{IncludeDir.Glad}"
+		"%{IncludeDir.Glad}",
+		"%{IncludeDir.ImGui}"
 	}
 	links
 	{
@@ -87,7 +90,8 @@ project "TestApp"
 		"NightFall/src",
 		"%{IncludeDir.spdlog}",
 		"%{IncludeDir.GLFW}",
-		"%{IncludeDir.Glad}"
+		"%{IncludeDir.Glad}",
+		"%{IncludeDir.ImGui}"
 	}
 	links
 	{
