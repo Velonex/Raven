@@ -3,6 +3,7 @@
 #include <NightFall/event/EventHandler.h>
 #include <NightFall/application/Window.h>
 #include <NightFall/layers/LayerStack.h>
+#include <NightFall/layers/layers/ImGuiLayer.h>
 
 namespace nfe {
 	class NightFallApplication : public EventListener
@@ -25,8 +26,9 @@ namespace nfe {
 	private:
 		EventHandler* _eventHandler;
 		Window* _window;
+		ImGuiLayer* _imGuiLayer;
 		LayerStack* _layerStack;
-		bool _running = true;;
+		bool _running = true;
 	};
 }
 #endif

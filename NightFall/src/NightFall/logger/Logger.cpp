@@ -23,7 +23,7 @@ namespace nfe {
 #else 
 namespace nfe {
 
-	void _Logger::init(char* name)
+	void Logger::init(char* name)
 	{
 
 	}

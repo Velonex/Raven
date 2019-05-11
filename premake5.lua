@@ -15,6 +15,7 @@ IncludeDir["spdlog"] = "NightFall/vendor/spdlog/include"
 IncludeDir["GLFW"] = "NightFall/vendor/GLFW/include"
 IncludeDir["Glad"] = "NightFall/vendor/glad/include"
 IncludeDir["ImGui"] = "NightFall/vendor/ImGui"
+IncludeDir["glm"] = "NightFall/vendor/glm/glm"
 
 include "NightFall/vendor/GLFW"
 include "NightFall/vendor/glad"
@@ -40,12 +41,14 @@ project "NightFall"
 		"%{IncludeDir.spdlog}",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
-		"%{IncludeDir.ImGui}"
+		"%{IncludeDir.ImGui}",
+		"%{IncludeDir.glm}"
 	}
 	links
 	{
 		"GLFW",
-		"Glad"
+		"Glad",
+		"ImGui"
 	}
 	filter "system:windows"
 		systemversion "latest"
@@ -91,7 +94,8 @@ project "TestApp"
 		"%{IncludeDir.spdlog}",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
-		"%{IncludeDir.ImGui}"
+		"%{IncludeDir.ImGui}",
+		"%{IncludeDir.glm}"
 	}
 	links
 	{

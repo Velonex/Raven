@@ -26,9 +26,8 @@ namespace nfe{
 #define LOG_WARN(...)	      ::nfe::Logger::getAppLogger()->warn(__VA_ARGS__)
 #define LOG_ERROR(...)	      ::nfe::Logger::getAppLogger()->error(__VA_ARGS__)
 #else
-#include <Spectral/Core.h>
 namespace nfe {
-	class _DLL _Logger
+	class Logger
 	{
 	public:
 		static void init(char* app);

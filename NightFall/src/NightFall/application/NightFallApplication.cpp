@@ -23,6 +23,7 @@ namespace nfe {
 		_eventHandler->subscribe(this, EventType::ALL);
 		Input::setInstance(Input::createInput());
 		_layerStack = new LayerStack();
+		_layerStack->pushOverlay(_imGuiLayer = new ImGuiLayer());
 		LOG_ENGINE_INFO("Successfully initialized.");
 		return 0;
 	}
@@ -39,6 +40,12 @@ namespace nfe {
 			{
 				(*--it)->onUpdate();
 			}
+			_imGuiLayer->beginFrame();
+			for (auto it = _layerStack->end(); it != _layerStack->begin(); )
+			{
+				(*--it)->onImGuiRender();
+			}
+			_imGuiLayer->endFrame();
 			_window->onUpdate();
 			//LOG_ENGINE_TRACE("{}", Input::isKeyPressed(KEY_W));
 		}
