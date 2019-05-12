@@ -1,5 +1,6 @@
 #ifndef NIGHTFALL_H_
 #define NIGHTFALL_H_
+
 // Includes everything needed
 #include <NightFall/application/NightFallApplication.h>
 #include <NightFall/logger/Logger.h>
@@ -14,7 +15,7 @@
 
 
 // Utils
-//#include <NightFall/utils/DebugUtils.h>
+#include <NightFall/utils/DebugTools.h>
 #include <NightFall/utils/Assert.h>
 
 // Datatypes
@@ -27,5 +28,8 @@
 #include <NightFall/application/Input.h>
 #include <NightFall/application/KeyCodes.h>
 #include <NightFall/application/MouseCodes.h>
+
+// ImGui
+#include <imgui.h>
 
 #endif

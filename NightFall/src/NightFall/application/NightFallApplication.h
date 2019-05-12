@@ -6,6 +6,7 @@
 #include <NightFall/layers/layers/ImGuiLayer.h>
 
 namespace nfe {
+
 	class NightFallApplication : public EventListener
 	{
 	public:
@@ -19,6 +20,7 @@ namespace nfe {
 		static NightFallApplication* getInstance() { return _app; }
 		EventHandler* getEventHandler() { return _eventHandler; }
 		Window* getWindow() { return _window; }
+		LayerStack* getLayerStack() { return _layerStack; }
 		virtual void onEvent(Event* e) override;
 	private:
 		static NightFallApplication* _app;
