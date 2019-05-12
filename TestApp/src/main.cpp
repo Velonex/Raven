@@ -32,15 +32,6 @@ public:
 		ImGui::Begin("TestWindow");
 		ImGui::Text("Test");
 		ImGui::End();
-		//float verts[9] = {
-		//	 0.0,  0.5,  0.0,
-		//	-0.5, -0.5,  0.0,
-		//	 0.5, -0.5,  0.0
-		//};
-		//unsigned int buffer;
-		//glGenBuffers(1, &buffer);
-		//glBindBuffer(GL_ARRAY_BUFFER, buffer);
-		//glBufferData(GL_ARRAY_BUFFER, sizeof(float)*9, verts, GL_STATIC_)
 	}
 };
 int main() {

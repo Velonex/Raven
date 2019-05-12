@@ -4,6 +4,7 @@
 #include <NightFall/application/MouseCodes.h>
 #include <NightFall/logger/Logger.h>
 #include <glad/glad.h>
+#include <NightFall/rendering/GraphicsContext.h>
 
 namespace nfe {
 	NightFallApplication* NightFallApplication::_app = nullptr;
@@ -25,6 +26,32 @@ namespace nfe {
 		_layerStack = new LayerStack();
 		_layerStack->pushOverlay(_imGuiLayer = new ImGuiLayer());
 		LOG_ENGINE_INFO("Successfully initialized.");
+
+		glGenVertexArrays(1, &_vertexArray);
+		glBindVertexArray(_vertexArray);
+
+		glGenBuffers(1, &_vertexBuffer);
+		glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
+
+		float vertices[3 * 3] = {
+			-0.5f, -0.5f,  0.0f,
+			 0.5f, -0.5f,  0.0f,
+			 0.0f,  0.5f,  0.0f
+		};
+		
+		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, nullptr);
+
+		glGenBuffers(1, &_indexBuffer);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
+
+		unsigned int indices[3] = {
+			0, 1, 2
+		};
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
 		return 0;
 	}
 	void NightFallApplication::run()
@@ -34,8 +61,10 @@ namespace nfe {
 			return;
 		}
 		while (_running) {
-			glClearColor(0.447f, 0.043f, 0.043f, 1.0f);
+			glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
+			glBindVertexArray(_vertexArray);
+			glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
 			for (auto it = _layerStack->end(); it != _layerStack->begin(); )
 			{
 				(*--it)->onUpdate();
@@ -47,7 +76,7 @@ namespace nfe {
 			}
 			_imGuiLayer->endFrame();
 			_window->onUpdate();
-			//LOG_ENGINE_TRACE("{}", Input::isKeyPressed(KEY_W));
+
 		}
 	}
 	int NightFallApplication::quit()

@@ -31,6 +31,10 @@ namespace nfe {
 		ImGuiLayer* _imGuiLayer;
 		LayerStack* _layerStack;
 		bool _running = true;
+
+		unsigned int _vertexArray, _vertexBuffer, _indexBuffer;
 	};
+	typedef NightFallApplication NFApp;
 }
+
 #endif

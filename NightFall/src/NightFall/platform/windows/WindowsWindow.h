@@ -21,11 +21,14 @@ namespace nfe {
 		virtual bool getVSync() const override;
 
 		inline virtual void* getNativeWindow() const override;
+
+		virtual GraphicsContext* getGraphicsContext() const override;
 	private:
 		virtual void _init(const WindowProps& props);
 		virtual void _shutdown();
 	private:
 		GLFWwindow* _window;
+		GraphicsContext* _context;
 		struct _WindowData {
 			unsigned int width, height;
 			std::string title;

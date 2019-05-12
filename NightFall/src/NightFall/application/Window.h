@@ -2,6 +2,7 @@
 #define WINDOW_H_
 #include <string>
 #include <NightFall/event/EventHandler.h>
+#include <NightFall/rendering/GraphicsContext.h>
 
 namespace nfe {
 	struct WindowProps {
@@ -25,6 +26,7 @@ namespace nfe {
 		virtual bool getVSync() const = 0;
 #undef WaitCommEvent
 		inline virtual void* getNativeWindow() const = 0;
+		virtual GraphicsContext* getGraphicsContext() const = 0;
 	};
 }
 

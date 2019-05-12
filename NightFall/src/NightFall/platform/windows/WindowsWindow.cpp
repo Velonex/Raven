@@ -4,7 +4,6 @@
 #include <NightFall/event/events/WindowEvents.h>
 #include <NightFall/event/events/KeyboardEvents.h>
 #include <NightFall/event/events/MouseEvents.h>
-#include <glad/glad.h>
 
 namespace nfe {
 	static bool glfwInitialized = false;
@@ -17,7 +16,7 @@ namespace nfe {
 	void WindowsWindow::onUpdate()
 	{
 		glfwPollEvents();
-		glfwSwapBuffers(_window);
+		_context->swapBuffers();
 	}
 
 	void WindowsWindow::_init(const WindowProps& props)
@@ -36,9 +35,8 @@ namespace nfe {
 			glfwInitialized = true;
 		}
 		_window = glfwCreateWindow(props.width, props.height, props.title.c_str(), nullptr, nullptr);
-		glfwMakeContextCurrent(_window);
-		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		ASSERT(!status, "Couldn't initialize GLFW!")
+		_context = GraphicsContext::createGraphicsContext(_window);
+		_context->init();
 		glfwSetWindowUserPointer(_window, &_windowData);
 		setVSync(true);
 
@@ -140,10 +138,14 @@ namespace nfe {
 		return _window;
 	}
 
+	GraphicsContext* WindowsWindow::getGraphicsContext() const
+	{
+		return _context;
+	}
+
 	Window* Window::createWindow(const WindowProps& props) {
 		return new WindowsWindow(props);
 	}
-
 	WindowsWindow::WindowsWindow(const WindowProps& props)
 	{
 		_init(props);
