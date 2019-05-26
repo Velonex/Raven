@@ -30,7 +30,7 @@ namespace nfe {
 
 		if (!glfwInitialized) {
 			int success = glfwInit();
-			ASSERT(!success, "Couldn't initialize GLFW!")
+			ASSERT(success, "Couldn't initialize GLFW!")
 			glfwSetErrorCallback(GLFWErrorCallback);
 			glfwInitialized = true;
 		}

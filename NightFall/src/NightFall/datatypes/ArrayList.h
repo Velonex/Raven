@@ -99,7 +99,7 @@ namespace nfe {
 			return 0;
 		}
 		T operator[](int index) {
-			ASSERT(index >= _used, "Out of bounds error! (ArrayList[])")
+			ASSERT(!(index >= _used), "Out of bounds error! (ArrayList[])")
 			return _data[index];
 		}
 	private:

@@ -5,7 +5,6 @@
 #include <NightFall/logger/Logger.h>
 #include <glad/glad.h>
 #include <NightFall/rendering/GraphicsContext.h>
-
 namespace nfe {
 	NightFallApplication* NightFallApplication::_app = nullptr;
 	bool NightFallApplication::_initialized = false;
@@ -52,6 +51,25 @@ namespace nfe {
 		};
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
+		std::string vertexSrc = R"(
+			#version 330 core
+
+			layout(location = 0) in vec3 a_Position;
+
+			void main() {
+				gl_Position = vec4(a_Position, 1.0);
+			}
+		)";
+		std::string pixelSrc = R"(
+			#version 330 core
+
+			layout(location = 0) out vec4 color;
+
+			void main() {
+				color = vec4(1.0, 0.0, 0.0, 1.0);
+			}
+		)";
+		_shader = new Shader(vertexSrc, pixelSrc);
 		return 0;
 	}
 	void NightFallApplication::run()
@@ -64,6 +82,7 @@ namespace nfe {
 			glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
 			glBindVertexArray(_vertexArray);
+			_shader->bind();
 			glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
 			for (auto it = _layerStack->end(); it != _layerStack->begin(); )
 			{
@@ -76,7 +95,7 @@ namespace nfe {
 			}
 			_imGuiLayer->endFrame();
 			_window->onUpdate();
-
+			_shader->bind();
 		}
 	}
 	int NightFallApplication::quit()
@@ -94,6 +113,7 @@ namespace nfe {
 		delete _window;
 		delete _eventHandler;
 		delete _layerStack;
+		delete _shader;
 		LOG_ENGINE_INFO("Stopped.");
 		return 0;
 	}
