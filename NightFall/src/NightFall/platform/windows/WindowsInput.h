@@ -1,6 +1,4 @@
-#ifndef WINDOWSINPUT_H_
-#define WINDOWSINPUT_H_
-
+#pragma once
 #include <NightFall/application/Window.h>
 #include <NightFall/application/Input.h>
 #include <GLFW/glfw3.h>
@@ -25,5 +23,3 @@ namespace nfe {
 	};
 
 }
-
-#endif

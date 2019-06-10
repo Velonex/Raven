@@ -1,5 +1,4 @@
-#ifndef LAYER_H_
-#define LAYER_H_
+#pragma once
 #include <string>
 #include <NightFall/event/Event.h>
 namespace nfe {
@@ -18,4 +17,3 @@ namespace nfe {
 		std::string& _name;
 	};
 }
-#endif

@@ -1,5 +1,4 @@
-#ifndef EVENTLISTENER_H_
-#define EVENTLISTENER_H_
+#pragma once
 #include <NightFall/event/Event.h>
 
 namespace nfe {
@@ -7,4 +6,3 @@ namespace nfe {
 		virtual void onEvent(Event* e) = 0;
 	};
 }
-#endif

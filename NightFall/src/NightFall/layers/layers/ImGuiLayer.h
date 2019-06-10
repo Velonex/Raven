@@ -1,6 +1,4 @@
-#ifndef IMGUILAYER_H_
-#define IMGUILAYER_H_
-
+#pragma once
 #include <NightFall/layers/Layer.h>
 #include <NightFall/application/Window.h>
 
@@ -24,5 +22,3 @@ namespace nfe {
 	};
 
 }
-
-#endif

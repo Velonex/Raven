@@ -1,6 +1,4 @@
-#ifndef INPUT_H_
-#define INPUT_H_
-
+#pragma once
 #include <NightFall/application/NightFallApplication.h>
 #include <utility>
 
@@ -25,5 +23,3 @@ namespace nfe {
 		static Input* _instance;
 	};
 }
-
-#endif

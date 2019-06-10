@@ -1,5 +1,4 @@
-#ifndef EVENT_H_
-#define EVENT_H_
+#pragma once
 #include <NightFall/event/EventType.h>
 
 namespace nfe {
@@ -16,4 +15,3 @@ namespace nfe {
 		EventType type;
 	};
 }
-#endif

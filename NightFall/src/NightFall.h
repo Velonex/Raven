@@ -1,6 +1,4 @@
-#ifndef NIGHTFALL_H_
-#define NIGHTFALL_H_
-
+#pragma once
 // Includes everything needed
 #include <NightFall/application/NightFallApplication.h>
 #include <NightFall/logger/Logger.h>
@@ -19,7 +17,7 @@
 #include <NightFall/utils/Assert.h>
 
 // Datatypes
-#include <NightFall/datatypes/ArrayList.h>
+//#include <NightFall/datatypes/ArrayList.h>
 
 // Window
 #include <NightFall/application/Window.h>
@@ -31,5 +29,3 @@
 
 // ImGui
 #include <imgui.h>
-
-#endif

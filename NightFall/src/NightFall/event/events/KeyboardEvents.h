@@ -1,6 +1,4 @@
-#ifndef KEYBOARDEVENTS_H_
-#define KEYBOARDEVENTS_H_
-
+#pragma once
 #include <NightFall\event\Event.h>
 
 namespace nfe {
@@ -26,5 +24,3 @@ namespace nfe {
 		KeyReleasedEvent(int keycode) : KeyEvent(keycode, EventType::EVENT_KEY_RELEASED, "KeyReleasedEvent") {}
 	};
 };
-
-#endif

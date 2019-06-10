@@ -1,5 +1,4 @@
-#ifndef DEBUGTOOLS_H_
-#define DEBUGTOOLS_H_
+#pragma once
 #include "Assert.h"
 
 #ifndef DIST
@@ -14,5 +13,4 @@
 #else
 	#define CONSOLE_TITLE(string_)
 	#define PAUSE()
-#endif
 #endif

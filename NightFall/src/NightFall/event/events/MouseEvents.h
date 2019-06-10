@@ -1,5 +1,4 @@
-#ifndef MOUSEEVENTS_H_
-#define MOUSEEVENTS_H_
+#pragma once
 #include <NightFall\event\Event.h>
 namespace nfe {
 	class MouseMovedEvent : public Event {
@@ -34,4 +33,3 @@ namespace nfe {
 		MouseButtonPressedEvent(int button) : MouseEvent(button, EventType::EVENT_MOUSE_BUTTON_PRESSED, "MousePressedEvent") { }
 	};
 }
-#endif

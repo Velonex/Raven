@@ -1,6 +1,4 @@
-#ifndef EVENTTYPE_H_
-#define EVENTTYPE_H_
-
+#pragma once
 namespace nfe {
 	enum EventType {
 		ALL,
@@ -11,4 +9,3 @@ namespace nfe {
 		EVENT_MOUSE_MOVED, EVENT_MOUSE_SCROLLED, EVENT_MOUSE_BUTTON_PRESSED, EVENT_MOUSE_BUTTON_RELEASED //Mouse events
 	};
 }
-#endif

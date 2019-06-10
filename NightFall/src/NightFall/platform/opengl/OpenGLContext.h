@@ -1,5 +1,4 @@
-#ifndef OPENGL_CONTEXT_H_
-#define OPENGL_CONTEXT_H_
+#pragma once
 
 #include <NightFall/rendering/GraphicsContext.h>
 
@@ -16,4 +15,3 @@ namespace nfe {
 	};
 
 }
-#endif

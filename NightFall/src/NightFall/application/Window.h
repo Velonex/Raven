@@ -1,5 +1,4 @@
-#ifndef WINDOW_H_
-#define WINDOW_H_
+#pragma once
 #include <string>
 #include <NightFall/event/EventHandler.h>
 #include <NightFall/rendering/GraphicsContext.h>
@@ -29,5 +28,3 @@ namespace nfe {
 		virtual GraphicsContext* getGraphicsContext() const = 0;
 	};
 }
-
-#endif

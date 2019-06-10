@@ -1,5 +1,4 @@
-#ifndef WINDOWSWINDOW_H_
-#define WINDOWSWINDOW_H_
+#pragma once
 #include <NightFall/logger/Logger.h>
 #include <NightFall/application/Window.h>
 #define GLFW_INCLUDE_NONE
@@ -37,4 +36,3 @@ namespace nfe {
 		} _windowData;
 	};
 }
-#endif

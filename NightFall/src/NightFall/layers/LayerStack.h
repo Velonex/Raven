@@ -1,5 +1,4 @@
-#ifndef LAYERSTACK_H_
-#define LAYERSTACK_H_
+#pragma once
 #include <NightFall/layers/Layer.h>
 #include <vector>
 namespace nfe {
@@ -21,4 +20,3 @@ namespace nfe {
 		uint32_t _layerInsertIndex = 0;
 	};
 }
-#endif

@@ -1,6 +1,4 @@
-#ifndef MOUSECODES_H_
-#define MOUSECODES_H_
-
+#pragma once
 #define MOUSE_BUTTON_1         0
 #define MOUSE_BUTTON_2         1
 #define MOUSE_BUTTON_3         2
@@ -13,5 +11,3 @@
 #define MOUSE_BUTTON_LEFT      MOUSE_BUTTON_1
 #define MOUSE_BUTTON_RIGHT     MOUSE_BUTTON_2
 #define MOUSE_BUTTON_MIDDLE    MOUSE_BUTTON_3
-
-#endif

@@ -4,6 +4,7 @@
 #include <GLFW/glfw3.h>
 #include <GL/GL.h>
 #include <NightFall/application/NightFallApplication.h>
+#include <NightFall/utils/Assert.h>
 #include <NightFall/logger/Logger.h>
 
 namespace nfe {

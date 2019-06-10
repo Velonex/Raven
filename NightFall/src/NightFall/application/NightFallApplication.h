@@ -1,5 +1,4 @@
-#ifndef NIGHTFALLAPPLICATION_H_
-#define NIGHTFALLAPPLICATION_H_
+#pragma once
 #include <NightFall/event/EventHandler.h>
 #include <NightFall/application/Window.h>
 #include <NightFall/layers/LayerStack.h>
@@ -39,5 +38,3 @@ namespace nfe {
 	};
 	typedef NightFallApplication NFApp;
 }
-
-#endif

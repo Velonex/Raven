@@ -1,5 +1,4 @@
-#ifndef GRAPHICS_CONTEXT_H_
-#define GRAPHICS_CONTEXT_H_
+#pragma once
 
 namespace nfe {
 	class Window;
@@ -10,4 +9,3 @@ namespace nfe {
 		static GraphicsContext* createGraphicsContext(void* window);
 	};
 }
-#endif

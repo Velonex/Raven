@@ -1,6 +1,4 @@
-#ifndef WINDOWEVENTS_H_
-#define WINDOWEVENTS_H_
-
+#pragma once
 #include <NightFall\event\Event.h>
 
 namespace nfe {
@@ -21,5 +19,3 @@ namespace nfe {
 		int _width, _height;
 	};
 }
-
-#endif

@@ -1,6 +1,7 @@
-#ifndef ARRAYLIST_H_
-#define ARRAYLIST_H_
+#pragma once
 #include <NightFall/utils/Assert.h>
+
+#error unsafe
 
 namespace nfe {
 	template<class T>
@@ -119,4 +120,3 @@ namespace nfe {
 	template <typename T>
 	using arraylist = ArrayList<T>;
 }
-#endif

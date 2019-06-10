@@ -1,20 +1,18 @@
-#ifndef EVENTHANDLER_H_
-#define EVENTHANDLER_H_
+#pragma once
 #include <NightFall/event/EventListener.h>
 #include <NightFall/event/EventType.h>
 #include <NightFall/event/Event.h>
 #include <NightFall/logger/Logger.h>
-#include <NightFall/datatypes/ArrayList.h>
 
 namespace nfe {
 	class EventHandler {
 	public:
 		void subscribe(EventListener* clazz, EventType type) {
-			if (_subs.contains(_Subscriber(clazz, type))) {
+			if (std::find(_subs.begin(), _subs.end(), _Subscriber(clazz, type)) != _subs.end()) {
 				LOG_ENGINE_WARN("Instance with type {} has subscribed multiple times", type);
 				return;
 			}
-			_subs.add({ clazz, type });
+			_subs.push_back({ clazz, type });
 		}
 		void dispatchEvent(Event* e) {
 			// LOG_ENGINE_TRACE("Dispatched Event with type {}.", e->getName());
@@ -26,11 +24,11 @@ namespace nfe {
 			delete e;
 		}
 		void unsubscribe(EventListener* clazz, EventType type) {
-			if (!_subs.contains(_Subscriber(clazz, type))) {
+			if (!(std::find(_subs.begin(), _subs.end(), _Subscriber(clazz, type)) != _subs.end())) {
 				LOG_ENGINE_WARN("Instance that hasn't subscribed tried to unsubscribe");
 				return;
 			}
-			_subs.remove(_subs.indexOf(_Subscriber(clazz, type)));
+			_subs.erase(std::find(_subs.begin(), _subs.end(), _Subscriber(clazz, type)));
 		}
 	private:
 		struct _Subscriber {
@@ -46,7 +44,6 @@ namespace nfe {
 
 			}
 		};
-		nfe::ArrayList<_Subscriber> _subs;
+		std::vector<_Subscriber> _subs;
 	};
 }
-#endif

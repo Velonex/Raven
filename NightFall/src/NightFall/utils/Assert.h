@@ -1,5 +1,4 @@
-#ifndef ASSERT_H_
-#define ASSERT_H_
+#pragma once
 #include <NightFall/logger/Logger.h>
 
 #ifdef PLATFORM_WINDOWS 
@@ -13,5 +12,4 @@
 	#endif
 #else
 	#error The Spectral Game-Engine yet only supports Windows!
-#endif
 #endif

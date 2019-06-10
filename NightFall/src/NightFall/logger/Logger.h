@@ -1,5 +1,4 @@
-#ifndef _LOGGER_H_
-#define _LOGGER_H_
+#pragma once
 #ifndef DIST
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
@@ -42,5 +41,4 @@ namespace nfe {
 #define LOG_INFO(...)
 #define LOG_WARN(...)
 #define LOG_ERROR(...)
-#endif
 #endif

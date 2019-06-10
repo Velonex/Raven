@@ -1,5 +1,4 @@
-#ifndef SHADER_H_
-#define SHADER_H_
+#pragma once
 
 #include <string>
 
@@ -16,5 +15,3 @@ namespace nfe {
 	};
 
 }
-
-#endif

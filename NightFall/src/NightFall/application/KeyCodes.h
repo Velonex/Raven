@@ -1,6 +1,4 @@
-#ifndef KEYCODES_H_
-#define KEYCODES_H_
-
+#pragma once
 /* Printable keys */
 #define KEY_SPACE              32
 #define KEY_APOSTROPHE         39  /* ' */
@@ -124,5 +122,3 @@
 #define KEY_RIGHT_ALT          346
 #define KEY_RIGHT_SUPER        347
 #define KEY_MENU               348
-
-#endif
