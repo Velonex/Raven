@@ -29,27 +29,24 @@ namespace nfe {
 		glGenVertexArrays(1, &_vertexArray);
 		glBindVertexArray(_vertexArray);
 
-		glGenBuffers(1, &_vertexBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
 
 		float vertices[3 * 3] = {
 			-0.5f, -0.5f,  0.0f,
 			 0.5f, -0.5f,  0.0f,
 			 0.0f,  0.5f,  0.0f
 		};
+
+		_vertexBuffer = VertexBuffer::create(vertices, sizeof(vertices));
 		
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, nullptr);
 
-		glGenBuffers(1, &_indexBuffer);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
-
 		unsigned int indices[3] = {
 			0, 1, 2
 		};
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+		_indexBuffer = IndexBuffer::create(indices, sizeof(indices));
 
 		std::string vertexSrc = R"(
 			#version 330 core

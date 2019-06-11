@@ -4,7 +4,7 @@
 #include <NightFall/layers/LayerStack.h>
 #include <NightFall/layers/layers/ImGuiLayer.h>
 #include <NightFall/rendering/Shader.h>
-
+#include <NightFall/rendering/Buffer.h>
 
 namespace nfe {
 
@@ -33,7 +33,9 @@ namespace nfe {
 		LayerStack* _layerStack;
 		bool _running = true;
 
-		unsigned int _vertexArray, _vertexBuffer, _indexBuffer;
+		unsigned int _vertexArray;
+		VertexBuffer* _vertexBuffer;
+		IndexBuffer* _indexBuffer;
 		Shader* _shader;
 	};
 	typedef NightFallApplication NFApp;
