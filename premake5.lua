@@ -17,9 +17,10 @@ IncludeDir["Glad"] = "NightFall/vendor/glad/include"
 IncludeDir["ImGui"] = "NightFall/vendor/ImGui"
 IncludeDir["glm"] = "NightFall/vendor/glm/glm"
 
-include "NightFall/vendor/GLFW"
-include "NightFall/vendor/glad"
-include "NightFall/vendor/ImGui"
+group "Dependencies"
+	include "NightFall/vendor/GLFW"
+	include "NightFall/vendor/glad"
+	include "NightFall/vendor/ImGui"	
 
 project "NightFall"
 	location "NightFall"
