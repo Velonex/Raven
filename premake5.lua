@@ -22,6 +22,8 @@ group "Dependencies"
 	include "NightFall/vendor/glad"
 	include "NightFall/vendor/ImGui"	
 
+group ""
+
 project "NightFall"
 	location "NightFall"
 	kind "StaticLib"
