@@ -1,6 +1,5 @@
 #include <NightFall.h>
 #include <imgui.h>
-#include <glad/glad.h>
 
 class TestApp : public nfe::NightFallApplication {
 

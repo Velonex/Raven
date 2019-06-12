@@ -2,6 +2,7 @@
 #include <NightFall/event/EventListener.h>
 #include <NightFall/event/EventType.h>
 #include <NightFall/event/Event.h>
+#include <vector>
 #include <NightFall/logger/Logger.h>
 
 namespace nfe {
