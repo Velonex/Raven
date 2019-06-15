@@ -29,3 +29,5 @@
 
 // ImGui
 #include <imgui.h>
+
+#include <NightFall/rendering/Renderer.h>

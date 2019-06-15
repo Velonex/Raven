@@ -32,7 +32,7 @@ namespace nfe {
 		ImGuiLayer* _imGuiLayer;
 		LayerStack* _layerStack;
 		bool _running = true;
-
+		// Rendering
 		unsigned int _vertexArray;
 		VertexBuffer* _vertexBuffer;
 		IndexBuffer* _indexBuffer;

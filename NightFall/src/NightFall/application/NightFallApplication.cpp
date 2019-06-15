@@ -5,9 +5,13 @@
 #include <NightFall/logger/Logger.h>
 #include <glad/glad.h>
 #include <NightFall/rendering/GraphicsContext.h>
+#include <NightFall/rendering/Renderer.h>
+#include <imgui.h>
+
 namespace nfe {
 	NightFallApplication* NightFallApplication::_app = nullptr;
 	bool NightFallApplication::_initialized = false;
+	static float* backgroundColor = new float[3];
 
 	int NightFallApplication::init(char* name)
 	{
@@ -77,16 +81,19 @@ namespace nfe {
 			}
 		)";
 		_shader = new Shader(vertexSrc, pixelSrc);
+		backgroundColor[0] = 0.1f;
+		backgroundColor[1] = 0.1f;
+		backgroundColor[2] = 0.1f;
 		return 0;
 	}
 	void NightFallApplication::run()
 	{
 		if (!_initialized) {
-			LOG_ENGINE_ERROR("You first have to set the instance!");
+			ASSERT(false, "You first have to set the instance");
 			return;
 		}
 		while (_running) {
-			glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+			Renderer::setClearColorRGBA(backgroundColor[0], backgroundColor[1], backgroundColor[2], 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
 			glBindVertexArray(_vertexArray);
 			_shader->bind();
@@ -95,7 +102,14 @@ namespace nfe {
 			{
 				(*--it)->onUpdate();
 			}
+			
 			_imGuiLayer->beginFrame();
+			{
+				ImGui::Begin("Controls");
+				ImGui::Text("Background color:");
+				ImGui::SliderFloat3("", backgroundColor, 0.0f, 1.0f, "%.2f");
+				ImGui::End();
+			}
 			for (auto it = _layerStack->end(); it != _layerStack->begin(); )
 			{
 				(*--it)->onImGuiRender();
