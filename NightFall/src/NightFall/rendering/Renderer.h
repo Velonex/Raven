@@ -11,6 +11,7 @@ namespace nfe {
 	public:
 		inline static RendererAPI getAPI() { return s_rendererAPI; }
 		static void setClearColorRGBA(float r, float g, float b, float a);
+		static void clear();
 	private:
 		static RendererAPI s_rendererAPI;
 	};

@@ -15,4 +15,13 @@ namespace nfe {
 		ASSERT(false, "Unknown RendererAPI")
 		return;
 	}
+	void Renderer::clear()
+	{
+		switch (getAPI()) {
+		case RendererAPI::None: ASSERT(false, "RendererAPI::None is currently not supported"); return;
+		case RendererAPI::OpenGL: OpenGLRenderer::clear(); return;
+		}
+		ASSERT(false, "Unknown RendererAPI")
+		return;
+	}
 }

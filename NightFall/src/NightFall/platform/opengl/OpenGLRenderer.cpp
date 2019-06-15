@@ -8,5 +8,8 @@ namespace nfe {
 	{
 		glClearColor(r, g, b, a);
 	}
-
+	void OpenGLRenderer::clear()
+	{
+		glClear(GL_COLOR_BUFFER_BIT);
+	}
 }

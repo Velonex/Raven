@@ -94,7 +94,7 @@ namespace nfe {
 		}
 		while (_running) {
 			Renderer::setClearColorRGBA(backgroundColor[0], backgroundColor[1], backgroundColor[2], 1.0f);
-			glClear(GL_COLOR_BUFFER_BIT);
+			Renderer::clear();
 			glBindVertexArray(_vertexArray);
 			_shader->bind();
 			glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
@@ -102,7 +102,6 @@ namespace nfe {
 			{
 				(*--it)->onUpdate();
 			}
-			
 			_imGuiLayer->beginFrame();
 			{
 				ImGui::Begin("Controls");
