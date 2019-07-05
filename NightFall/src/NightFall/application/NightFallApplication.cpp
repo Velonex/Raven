@@ -30,30 +30,34 @@ namespace nfe {
 		_layerStack->pushOverlay(_imGuiLayer = new ImGuiLayer());
 		LOG_ENGINE_INFO("Successfully initialized.");
 
-		glGenVertexArrays(1, &_vertexArray);
-		glBindVertexArray(_vertexArray);
+		{
+			_vertexArray = VertexArray::create();
 
+			float vertices[3 * 7] = {
+				-0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
+				 0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
+				 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
+			};
 
-		float vertices[3 * 7] = {
-			-0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
-			 0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
-			 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
-		};
+			_vertexBuffer = VertexBuffer::create(vertices, sizeof(vertices));
 
-		_vertexBuffer = VertexBuffer::create(vertices, sizeof(vertices));
+			BufferLayout layout = {
+				{ ShaderDataType::Float3, "a_Position" },
+				{ ShaderDataType::Float4, "a_Color" }
+			};
+			_vertexBuffer->setLayout(layout);
 
-		BufferLayout layout = {
-			{ ShaderDataType::Float3, "a_Position" },
-			{ ShaderDataType::Float4, "a_Color" }
-		};
-		_vertexBuffer->setLayout(layout);
-		unsigned int indices[3] = {
-			0, 1, 2
-		};
+			_vertexArray->addVertexBuffer(_vertexBuffer);
 
-		_indexBuffer = IndexBuffer::create(indices, sizeof(indices));
+			unsigned int indices[3] = {
+				0, 1, 2
+			};
 
-		std::string vertexSrc = R"(
+			_indexBuffer = IndexBuffer::create(indices, sizeof(indices));
+
+			_vertexArray->setIndexBuffer(_indexBuffer);
+
+			std::string vertexSrc = R"(
 			#version 330 core
 
 			layout(location = 0) in vec3 a_Position;
@@ -67,8 +71,8 @@ namespace nfe {
 				v_Position = a_Position;
 				v_Color = a_Color;
 			}
-		)";
-		std::string pixelSrc = R"(
+			)";
+			std::string pixelSrc = R"(
 			#version 330 core
 
 			layout(location = 0) out vec4 color;
@@ -79,8 +83,58 @@ namespace nfe {
 			void main() {
 				color = v_Color;
 			}
-		)";
-		_shader = new Shader(vertexSrc, pixelSrc);
+			)";
+			_shader = new Shader(vertexSrc, pixelSrc);
+		}
+		{
+			_vertexArraysq = VertexArray::create();
+
+			float vertices[3 * 4] = {
+				-0.75f, -0.75f, 0.0f,
+				 0.75f, -0.75f, 0.0f,
+				 0.75f,  0.75f, 0.0f,
+				-0.75f,  0.75f, 0.0f
+			};
+
+			_vertexBuffersq = VertexBuffer::create(vertices, sizeof(vertices));
+
+			BufferLayout layout = {
+				{ ShaderDataType::Float3, "a_Position" }
+			};
+			_vertexBuffersq->setLayout(layout);
+
+			_vertexArraysq->addVertexBuffer(_vertexBuffersq);
+
+			uint32_t indices[6] = { 0, 1, 2, 2, 3, 0 };
+
+			_indexBuffersq = IndexBuffer::create(indices, sizeof(indices));
+
+			_vertexArraysq->setIndexBuffer(_indexBuffersq);
+
+			std::string vertexSrc = R"(
+			#version 330 core
+			
+			layout(location = 0) in vec3 a_Position;
+			out vec3 v_Position;
+			void main()
+			{
+				v_Position = a_Position;
+				gl_Position = vec4(a_Position, 1.0);	
+			}
+			)";
+			std::string pixelSrc = R"(
+			#version 330 core
+			
+			layout(location = 0) out vec4 color;
+			in vec3 v_Position;
+			void main()
+			{
+				color = vec4(0.2, 0.8, 0.3, 1.0);
+			}
+			)";
+			_shadersq = new Shader(vertexSrc, pixelSrc);
+		}
+
 		backgroundColor[0] = 0.1f;
 		backgroundColor[1] = 0.1f;
 		backgroundColor[2] = 0.1f;
@@ -95,7 +149,11 @@ namespace nfe {
 		while (_running) {
 			Renderer::setClearColorRGBA(backgroundColor[0], backgroundColor[1], backgroundColor[2], 1.0f);
 			Renderer::clear();
-			glBindVertexArray(_vertexArray);
+
+			_vertexArraysq->bind();
+			_shadersq->bind();
+			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+			_vertexArray->bind();
 			_shader->bind();
 			glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
 			for (auto it = _layerStack->end(); it != _layerStack->begin(); )
