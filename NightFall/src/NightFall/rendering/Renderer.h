@@ -1,18 +1,24 @@
 #pragma once
 
-namespace nfe {
+#include "RenderCommand.h"
 
-	enum class RendererAPI {
-		None,
-		OpenGL
-	};
+#include "Camera.h"
+#include "Shader.h"
+
+namespace nfe {
 
 	class Renderer {
 	public:
-		inline static RendererAPI getAPI() { return s_rendererAPI; }
-		static void setClearColorRGBA(float r, float g, float b, float a);
-		static void clear();
+		static void beginScene(OrthographicCamera& camera); // TODO: Take in scene attribs
+		static void endScene();
+
+		static void submit(const Shader* shader, const VertexArray* vertexArray);
+
+		inline static RendererAPI::API getApi() { return RendererAPI::getAPI(); }
 	private:
-		static RendererAPI s_rendererAPI;
+		struct SceneData {
+			glm::mat4 _viewProjectionMatrix;
+		};
+		static SceneData* s_sceneData;
 	};
 }

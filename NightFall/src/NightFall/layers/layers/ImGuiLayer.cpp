@@ -62,8 +62,10 @@ namespace nfe {
 	void ImGuiLayer::endFrame()
 	{
 		ImGuiIO& io = ImGui::GetIO();
+#pragma warning(push)
+#pragma warning(disable : 4244)
 		io.DisplaySize = ImVec2(_window->getWidth(), _window->getHeight());
-
+#pragma warning(pop)
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {

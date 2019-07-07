@@ -32,11 +32,12 @@ namespace nfe {
 		glDeleteBuffers(1, &_id);
 	}
 
-	OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t* indices, uint32_t size)
+	OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t* indices, uint32_t count)
 	{
+		_count = count;
 		glGenBuffers(1, &_id);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _id);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, indices, GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, count, indices, GL_STATIC_DRAW);
 	}
 
 	void OpenGLIndexBuffer::bind() const

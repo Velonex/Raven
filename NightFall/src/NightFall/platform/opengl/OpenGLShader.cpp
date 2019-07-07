@@ -2,6 +2,7 @@
 #include <vector>
 #include <glad/glad.h>
 #include <NightFall/utils/DebugTools.h>
+#include <gtc/type_ptr.hpp>
 
 namespace nfe {
 
@@ -121,14 +122,20 @@ namespace nfe {
 		glDeleteProgram(this->_programId);
 	}
 
-	void Shader::bind()
+	void Shader::bind() const
 	{
 		glUseProgram(this->_programId);
 	}
 
-	void Shader::unbind()
+	void Shader::unbind() const
 	{
 		glUseProgram(0);
+	}
+
+	void Shader::uploadUniformMat4(const char* name, const glm::mat4& mat) const
+	{
+		int i = glGetUniformLocation(this->_programId, name);
+		glUniformMatrix4fv(i, 1, false, glm::value_ptr(mat));
 	}
 
 }

@@ -59,7 +59,10 @@ namespace nfe {
 				shaderDataTypeToOpenGLBaseType(element.type),
 				element.normalized ? GL_TRUE : GL_FALSE,
 				layout.getStride(),
+#pragma warning(push)
+#pragma warning(disable : 4312)
 				(const void*)element.offset);
+#pragma warning(pop)
 			index++;
 		}
 		_vertexBuffers.push_back((VertexBuffer*)vertexBuffer);

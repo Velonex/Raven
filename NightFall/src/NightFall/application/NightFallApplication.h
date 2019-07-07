@@ -6,6 +6,7 @@
 #include <NightFall/rendering/Shader.h>
 #include <NightFall/rendering/Buffer.h>
 #include <NightFall/rendering/VertexArray.h>
+#include <NightFall/rendering/Camera.h>
 
 namespace nfe {
 
@@ -44,6 +45,8 @@ namespace nfe {
 		VertexBuffer* _vertexBuffersq;
 		IndexBuffer* _indexBuffersq;
 		Shader* _shadersq;
+
+		OrthographicCamera* _camera;
 	};
 	typedef NightFallApplication NFApp;
 }

@@ -1,12 +1,5 @@
 #include "NightFallApplication.h"
-#include <NightFall/application/KeyCodes.h>
-#include <NightFall/application/Input.h>
-#include <NightFall/application/MouseCodes.h>
-#include <NightFall/logger/Logger.h>
-#include <glad/glad.h>
-#include <NightFall/rendering/GraphicsContext.h>
-#include <NightFall/rendering/Renderer.h>
-#include <imgui.h>
+#include <NightFall.h>
 
 namespace nfe {
 	NightFallApplication* NightFallApplication::_app = nullptr;
@@ -29,6 +22,8 @@ namespace nfe {
 		_layerStack = new LayerStack();
 		_layerStack->pushOverlay(_imGuiLayer = new ImGuiLayer());
 		LOG_ENGINE_INFO("Successfully initialized.");
+
+		_camera = new OrthographicCamera(-1.6f, 1.6f, -.9f, .9f);
 
 		{
 			_vertexArray = VertexArray::create();
@@ -63,13 +58,15 @@ namespace nfe {
 			layout(location = 0) in vec3 a_Position;
 			layout(location = 1) in vec4 a_Color;
 
+			uniform mat4 u_viewProjection;
+
 			out vec3 v_Position;
 			out vec4 v_Color;
 
 			void main() {
-				gl_Position = vec4(a_Position, 1.0);
 				v_Position = a_Position;
 				v_Color = a_Color;
+				gl_Position = u_viewProjection * vec4(a_Position, 1.0);
 			}
 			)";
 			std::string pixelSrc = R"(
@@ -116,11 +113,15 @@ namespace nfe {
 			#version 330 core
 			
 			layout(location = 0) in vec3 a_Position;
+
+			uniform mat4 u_viewProjection;
+
 			out vec3 v_Position;
+
 			void main()
 			{
 				v_Position = a_Position;
-				gl_Position = vec4(a_Position, 1.0);	
+				gl_Position = u_viewProjection * vec4(a_Position, 1.0);
 			}
 			)";
 			std::string pixelSrc = R"(
@@ -148,15 +149,17 @@ namespace nfe {
 			return;
 		}
 		while (_running) {
-			Renderer::setClearColorRGBA(backgroundColor[0], backgroundColor[1], backgroundColor[2], 1.0f);
-			Renderer::clear();
+			RenderCommand::setClearColor({ backgroundColor[0], backgroundColor[1], backgroundColor[2], 1.0f });
+			RenderCommand::clear();
 
-			_vertexArraysq->bind();
-			_shadersq->bind();
-			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
-			_vertexArray->bind();
-			_shader->bind();
-			glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+			_camera->setRotation(45.f);
+
+			Renderer::beginScene(*_camera);
+			{
+				Renderer::submit(_shadersq, _vertexArraysq);
+				Renderer::submit(_shader, _vertexArray);
+			}
+			Renderer::endScene();
 
 			for (auto it = _layerStack->end(); it != _layerStack->begin(); )
 			{
@@ -199,7 +202,6 @@ namespace nfe {
 	}
 	void NightFallApplication::onEvent(Event* e)
 	{
-		//LOG_ENGINE_TRACE("Event received: {}", e->getName());
 		for (auto it = _layerStack->end(); it != _layerStack->begin(); )
 		{
 			(*--it)->onEvent(e);
@@ -207,6 +209,32 @@ namespace nfe {
 		switch (e->getType()) {
 		case EventType::EVENT_WINDOW_CLOSE:
 			_running = false;
+		case EventType::EVENT_KEY_PRESSED:
+		{
+			KeyPressedEvent* ev = (KeyPressedEvent*)e;
+			switch (ev->getKeyCode()) {
+			case KEY_A: {
+				const glm::vec3& pos = _camera->getPosition();
+				_camera->setPosition({ pos.x - 0.05f, pos.y, pos.z });
+				break;
+			}
+			case KEY_D: {
+				const glm::vec3& pos = _camera->getPosition();
+				_camera->setPosition({ pos.x + 0.05f, pos.y, pos.z });
+				break;
+			}
+			case KEY_W: {
+				const glm::vec3& pos = _camera->getPosition();
+				_camera->setPosition({ pos.x, pos.y + 0.05f, pos.z });
+				break;
+			}
+			case KEY_S: {
+				const glm::vec3& pos = _camera->getPosition();
+				_camera->setPosition({ pos.x, pos.y - 0.05f, pos.z });
+				break;
+			}
+			}
+		}
 		default:
 			return;
 		}

@@ -5,23 +5,19 @@
 
 
 namespace nfe {
-	RendererAPI Renderer::s_rendererAPI = RendererAPI::OpenGL;
-	void Renderer::setClearColorRGBA(float r, float g, float b, float a)
+	Renderer::SceneData* Renderer::s_sceneData = new SceneData;
+	void Renderer::beginScene(OrthographicCamera& camera)
 	{
-		switch (getAPI()) {
-			case RendererAPI::None: ASSERT(false, "RendererAPI::None is currently not supported"); return;
-			case RendererAPI::OpenGL: OpenGLRenderer::setClearColorRGBA(r, g, b, a); return;
-		}
-		ASSERT(false, "Unknown RendererAPI")
-		return;
+		s_sceneData->_viewProjectionMatrix = camera.getViewProjectionMatrix();
 	}
-	void Renderer::clear()
+	void Renderer::endScene()
 	{
-		switch (getAPI()) {
-		case RendererAPI::None: ASSERT(false, "RendererAPI::None is currently not supported"); return;
-		case RendererAPI::OpenGL: OpenGLRenderer::clear(); return;
-		}
-		ASSERT(false, "Unknown RendererAPI")
-		return;
+	}
+	void Renderer::submit(const Shader* shader, const VertexArray* vertexArray)
+	{
+		shader->bind();
+		vertexArray->bind();
+		shader->uploadUniformMat4("u_viewProjection", s_sceneData->_viewProjectionMatrix);
+		RenderCommand::drawIndexed(vertexArray);
 	}
 }

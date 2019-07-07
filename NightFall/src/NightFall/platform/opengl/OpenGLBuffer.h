@@ -17,11 +17,16 @@ namespace nfe {
 	};
 	class OpenGLIndexBuffer : public IndexBuffer {
 	public:
-		OpenGLIndexBuffer(uint32_t* indices, uint32_t size);
+		OpenGLIndexBuffer(uint32_t* indices, uint32_t count);
 		virtual void bind() const override;
 		virtual void unbind() const override;
+
+		virtual uint32_t getCount() const override {
+			//LOG_ENGINE_TRACE("{}", _count);
+			return _count;
+		}
 		~OpenGLIndexBuffer();
 	private:
-		uint32_t _id;
+		uint32_t _id, _count;
 	};
 }
