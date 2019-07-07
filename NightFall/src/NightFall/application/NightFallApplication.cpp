@@ -96,6 +96,7 @@ namespace nfe {
 				-0.75f,  0.75f, 0.0f
 			};
 
+
 			_vertexBuffersq = VertexBuffer::create(vertices, sizeof(vertices));
 
 			BufferLayout layout = {
@@ -156,6 +157,7 @@ namespace nfe {
 			_vertexArray->bind();
 			_shader->bind();
 			glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+
 			for (auto it = _layerStack->end(); it != _layerStack->begin(); )
 			{
 				(*--it)->onUpdate();
@@ -198,7 +200,10 @@ namespace nfe {
 	void NightFallApplication::onEvent(Event* e)
 	{
 		//LOG_ENGINE_TRACE("Event received: {}", e->getName());
-
+		for (auto it = _layerStack->end(); it != _layerStack->begin(); )
+		{
+			(*--it)->onEvent(e);
+		}
 		switch (e->getType()) {
 		case EventType::EVENT_WINDOW_CLOSE:
 			_running = false;
