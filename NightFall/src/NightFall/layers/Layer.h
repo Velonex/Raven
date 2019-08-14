@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <NightFall/event/Event.h>
+#include <NightFall/core/Timestep.h>
 namespace nfe {
 	class Layer
 	{
@@ -10,7 +11,7 @@ namespace nfe {
 		virtual void onEvent(Event* e) {}
 		virtual void onAttach() {}
 		virtual void onDetach() {}
-		virtual void onUpdate() {}
+		virtual void onUpdate(Timestep ts) {}
 		virtual void onImGuiRender() {}
 		std::string& getName() const { return _name; }
 	private:

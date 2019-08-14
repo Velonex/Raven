@@ -7,6 +7,7 @@
 #include <NightFall/rendering/Buffer.h>
 #include <NightFall/rendering/VertexArray.h>
 #include <NightFall/rendering/Camera.h>
+#include <NightFall/core/Timestep.h>
 
 namespace nfe {
 
@@ -34,19 +35,7 @@ namespace nfe {
 		ImGuiLayer* _imGuiLayer;
 		LayerStack* _layerStack;
 		bool _running = true;
-		// Rendering
-		VertexArray* _vertexArray;
-		VertexBuffer* _vertexBuffer;
-		IndexBuffer* _indexBuffer;
-		Shader* _shader;
-
-		// Rendering 2
-		VertexArray* _vertexArraysq;
-		VertexBuffer* _vertexBuffersq;
-		IndexBuffer* _indexBuffersq;
-		Shader* _shadersq;
-
-		OrthographicCamera* _camera;
+		float _lastFrameTime = 0.f;
 	};
 	typedef NightFallApplication NFApp;
 }

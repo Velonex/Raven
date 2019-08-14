@@ -28,4 +28,5 @@ namespace nfe {
 		float _rotation = 0.0f;
 	};
 
+
 }

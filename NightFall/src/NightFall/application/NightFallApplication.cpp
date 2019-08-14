@@ -1,5 +1,6 @@
 #include "NightFallApplication.h"
 #include <NightFall.h>
+#include <GLFW/glfw3.h>
 
 namespace nfe {
 	NightFallApplication* NightFallApplication::_app = nullptr;
@@ -23,120 +24,7 @@ namespace nfe {
 		_layerStack->pushOverlay(_imGuiLayer = new ImGuiLayer());
 		LOG_ENGINE_INFO("Successfully initialized.");
 
-		_camera = new OrthographicCamera(-1.6f, 1.6f, -.9f, .9f);
-
-		{
-			_vertexArray = VertexArray::create();
-
-			float vertices[3 * 7] = {
-				-0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
-				 0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
-				 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
-			};
-
-			_vertexBuffer = VertexBuffer::create(vertices, sizeof(vertices));
-
-			BufferLayout layout = {
-				{ ShaderDataType::Float3, "a_Position" },
-				{ ShaderDataType::Float4, "a_Color" }
-			};
-			_vertexBuffer->setLayout(layout);
-
-			_vertexArray->addVertexBuffer(_vertexBuffer);
-
-			unsigned int indices[3] = {
-				0, 1, 2
-			};
-
-			_indexBuffer = IndexBuffer::create(indices, sizeof(indices));
-
-			_vertexArray->setIndexBuffer(_indexBuffer);
-
-			std::string vertexSrc = R"(
-			#version 330 core
-
-			layout(location = 0) in vec3 a_Position;
-			layout(location = 1) in vec4 a_Color;
-
-			uniform mat4 u_viewProjection;
-
-			out vec3 v_Position;
-			out vec4 v_Color;
-
-			void main() {
-				v_Position = a_Position;
-				v_Color = a_Color;
-				gl_Position = u_viewProjection * vec4(a_Position, 1.0);
-			}
-			)";
-			std::string pixelSrc = R"(
-			#version 330 core
-
-			layout(location = 0) out vec4 color;
-
-			in vec3 v_Position;
-			in vec4 v_Color;
-
-			void main() {
-				color = v_Color;
-			}
-			)";
-			_shader = new Shader(vertexSrc, pixelSrc);
-		}
-		{
-			_vertexArraysq = VertexArray::create();
-
-			float vertices[3 * 4] = {
-				-0.75f, -0.75f, 0.0f,
-				 0.75f, -0.75f, 0.0f,
-				 0.75f,  0.75f, 0.0f,
-				-0.75f,  0.75f, 0.0f
-			};
-
-
-			_vertexBuffersq = VertexBuffer::create(vertices, sizeof(vertices));
-
-			BufferLayout layout = {
-				{ ShaderDataType::Float3, "a_Position" }
-			};
-			_vertexBuffersq->setLayout(layout);
-
-			_vertexArraysq->addVertexBuffer(_vertexBuffersq);
-
-			uint32_t indices[6] = { 0, 1, 2, 2, 3, 0 };
-
-			_indexBuffersq = IndexBuffer::create(indices, sizeof(indices));
-
-			_vertexArraysq->setIndexBuffer(_indexBuffersq);
-
-			std::string vertexSrc = R"(
-			#version 330 core
-			
-			layout(location = 0) in vec3 a_Position;
-
-			uniform mat4 u_viewProjection;
-
-			out vec3 v_Position;
-
-			void main()
-			{
-				v_Position = a_Position;
-				gl_Position = u_viewProjection * vec4(a_Position, 1.0);
-			}
-			)";
-			std::string pixelSrc = R"(
-			#version 330 core
-			
-			layout(location = 0) out vec4 color;
-			in vec3 v_Position;
-			void main()
-			{
-				color = vec4(0.2, 0.8, 0.3, 1.0);
-			}
-			)";
-			_shadersq = new Shader(vertexSrc, pixelSrc);
-		}
-
+		
 		backgroundColor[0] = 0.1f;
 		backgroundColor[1] = 0.1f;
 		backgroundColor[2] = 0.1f;
@@ -149,21 +37,15 @@ namespace nfe {
 			return;
 		}
 		while (_running) {
+			float time = (float)glfwGetTime();
+			Timestep timestep = time - _lastFrameTime;
+			_lastFrameTime = time;
+
 			RenderCommand::setClearColor({ backgroundColor[0], backgroundColor[1], backgroundColor[2], 1.0f });
 			RenderCommand::clear();
-
-			_camera->setRotation(45.f);
-
-			Renderer::beginScene(*_camera);
-			{
-				Renderer::submit(_shadersq, _vertexArraysq);
-				Renderer::submit(_shader, _vertexArray);
-			}
-			Renderer::endScene();
-
 			for (auto it = _layerStack->end(); it != _layerStack->begin(); )
 			{
-				(*--it)->onUpdate();
+				(*--it)->onUpdate(timestep);
 			}
 			_imGuiLayer->beginFrame();
 			{
@@ -178,7 +60,6 @@ namespace nfe {
 			}
 			_imGuiLayer->endFrame();
 			_window->onUpdate();
-			_shader->bind();
 		}
 	}
 	int NightFallApplication::quit()
@@ -196,7 +77,6 @@ namespace nfe {
 		delete _window;
 		delete _eventHandler;
 		delete _layerStack;
-		delete _shader;
 		LOG_ENGINE_INFO("Stopped.");
 		return 0;
 	}
@@ -209,32 +89,7 @@ namespace nfe {
 		switch (e->getType()) {
 		case EventType::EVENT_WINDOW_CLOSE:
 			_running = false;
-		case EventType::EVENT_KEY_PRESSED:
-		{
-			KeyPressedEvent* ev = (KeyPressedEvent*)e;
-			switch (ev->getKeyCode()) {
-			case KEY_A: {
-				const glm::vec3& pos = _camera->getPosition();
-				_camera->setPosition({ pos.x - 0.05f, pos.y, pos.z });
-				break;
-			}
-			case KEY_D: {
-				const glm::vec3& pos = _camera->getPosition();
-				_camera->setPosition({ pos.x + 0.05f, pos.y, pos.z });
-				break;
-			}
-			case KEY_W: {
-				const glm::vec3& pos = _camera->getPosition();
-				_camera->setPosition({ pos.x, pos.y + 0.05f, pos.z });
-				break;
-			}
-			case KEY_S: {
-				const glm::vec3& pos = _camera->getPosition();
-				_camera->setPosition({ pos.x, pos.y - 0.05f, pos.z });
-				break;
-			}
-			}
-		}
+			break;
 		default:
 			return;
 		}
