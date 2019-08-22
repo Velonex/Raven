@@ -1,5 +1,6 @@
 #include <NightFall.h>
 #include <imgui.h>
+#include <NightFall/application/Input.h>
 
 class TestApp : public nfe::NightFallApplication {
 };
@@ -13,7 +14,6 @@ public:
 	}
 	virtual void onAttach() override {
 		_camera = new nfe::OrthographicCamera(-1.6f, 1.6f, -.9f, .9f);
-
 		{
 			_vertexArray = nfe::VertexArray::create();
 
@@ -134,45 +134,30 @@ public:
 	virtual void onUpdate(nfe::Timestep ts) override {
 		_camera->setRotation(45.f);
 
-		LOG_TRACE("Last frame time: {}", ts.getSeconds());
+		//LOG_TRACE("Frames per second: {}", 1 /  ts.getSeconds());
 
+		if (nfe::Input::isKeyPressed(KEY_A)) {
+			const glm::vec3& pos = _camera->getPosition();
+			_camera->setPosition({ pos.x - ts * 0.5f, pos.y, pos.z });
+		}
+		if (nfe::Input::isKeyPressed(KEY_D)) {
+			const glm::vec3& pos = _camera->getPosition();
+			_camera->setPosition({ pos.x + ts * 0.5f, pos.y, pos.z });
+		}
+		if (nfe::Input::isKeyPressed(KEY_W)) {
+			const glm::vec3& pos = _camera->getPosition();
+			_camera->setPosition({ pos.x, pos.y + ts * 0.5f, pos.z });
+		}
+		if (nfe::Input::isKeyPressed(KEY_S)) {
+			const glm::vec3& pos = _camera->getPosition();
+			_camera->setPosition({ pos.x, pos.y - ts * 0.5f, pos.z });
+		}
 		nfe::Renderer::beginScene(*_camera);
 		{
 			nfe::Renderer::submit(_shadersq, _vertexArraysq);
 			nfe::Renderer::submit(_shader, _vertexArray);
 		}
 		nfe::Renderer::endScene();
-	}
-	virtual void onEvent(nfe::Event* e) override {
-		switch (e->getType()) {
-			case nfe::EventType::EVENT_KEY_PRESSED: {
-				nfe::KeyPressedEvent* ev = (nfe::KeyPressedEvent*) e;
-				switch (ev->getKeyCode()) {
-				case KEY_A: {
-					const glm::vec3& pos = _camera->getPosition();
-					_camera->setPosition({ pos.x - 0.05f, pos.y, pos.z });
-					break;
-				}
-				case KEY_D: {
-					const glm::vec3& pos = _camera->getPosition();
-					_camera->setPosition({ pos.x + 0.05f, pos.y, pos.z });
-					break;
-				}
-				case KEY_W: {
-					const glm::vec3& pos = _camera->getPosition();
-					_camera->setPosition({ pos.x, pos.y + 0.05f, pos.z });
-					break;
-				}
-				case KEY_S: {
-					const glm::vec3& pos = _camera->getPosition();
-					_camera->setPosition({ pos.x, pos.y - 0.05f, pos.z });
-					break;
-				}
-				default:
-					break;
-				}
-			}
-		}
 	}
 	private:
 	// Rendering

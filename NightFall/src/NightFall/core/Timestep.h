@@ -9,7 +9,9 @@ namespace nfe {
 		}
 		float getSeconds() const { return _time; }
 		float getMilliSeconds() const { return _time * 1000.f; }
-
+		float operator*(float rhs) {
+			return _time * rhs;
+		}
 	private:
 		float _time = 0.0f;
 	};
