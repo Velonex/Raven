@@ -5,7 +5,6 @@
 namespace nfe {
 	NightFallApplication* NightFallApplication::_app = nullptr;
 	bool NightFallApplication::_initialized = false;
-	static float* backgroundColor = new float[3];
 
 	int NightFallApplication::init(char* name)
 	{
@@ -23,11 +22,6 @@ namespace nfe {
 		_layerStack = new LayerStack();
 		_layerStack->pushOverlay(_imGuiLayer = new ImGuiLayer());
 		LOG_ENGINE_INFO("Successfully initialized.");
-
-		
-		backgroundColor[0] = 0.1f;
-		backgroundColor[1] = 0.1f;
-		backgroundColor[2] = 0.1f;
 		return 0;
 	}
 	void NightFallApplication::run()
@@ -41,7 +35,7 @@ namespace nfe {
 			Timestep timestep = time - _lastFrameTime;
 			_lastFrameTime = time;
 
-			RenderCommand::setClearColor({ backgroundColor[0], backgroundColor[1], backgroundColor[2], 1.0f });
+			RenderCommand::setClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
 			RenderCommand::clear();
 			for (auto it = _layerStack->end(); it != _layerStack->begin(); )
 			{
@@ -49,9 +43,8 @@ namespace nfe {
 			}
 			_imGuiLayer->beginFrame();
 			{
-				ImGui::Begin("Controls");
-				ImGui::Text("Background color:");
-				ImGui::SliderFloat3("", backgroundColor, 0.0f, 1.0f, "%.2f");
+				ImGui::Begin("Renderer");
+				ImGui::Text("FPS: %f", 1 / timestep.getSeconds());
 				ImGui::End();
 			}
 			for (auto it = _layerStack->end(); it != _layerStack->begin(); )

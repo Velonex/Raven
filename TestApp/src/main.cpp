@@ -126,14 +126,7 @@ public:
 			_shadersq = new nfe::Shader(vertexSrc, pixelSrc);
 		}
 	}
-	virtual void onImGuiRender() override {
-		ImGui::Begin("TestWindow");
-		ImGui::Text("Test");
-		ImGui::End();
-	}
 	virtual void onUpdate(nfe::Timestep ts) override {
-		_camera->setRotation(45.f);
-
 		//LOG_TRACE("Frames per second: {}", 1 /  ts.getSeconds());
 
 		if (nfe::Input::isKeyPressed(KEY_A)) {

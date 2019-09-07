@@ -12,6 +12,9 @@ namespace nfe {
 		float operator*(float rhs) {
 			return _time * rhs;
 		}
+		float operator*=(float rhs) {
+			return _time * rhs;
+		}
 	private:
 		float _time = 0.0f;
 	};
