@@ -13,11 +13,12 @@ namespace nfe {
 	void Renderer::endScene()
 	{
 	}
-	void Renderer::submit(const Shader* shader, const VertexArray* vertexArray)
+	void Renderer::submit(const Shader* shader, const VertexArray* vertexArray, const glm::mat4& transform)
 	{
 		shader->bind();
 		vertexArray->bind();
 		shader->uploadUniformMat4("u_viewProjection", s_sceneData->_viewProjectionMatrix);
+		shader->uploadUniformMat4("u_transform", transform);
 		RenderCommand::drawIndexed(vertexArray);
 	}
 }

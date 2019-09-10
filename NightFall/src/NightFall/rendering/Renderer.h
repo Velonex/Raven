@@ -4,6 +4,7 @@
 
 #include "Camera.h"
 #include "Shader.h"
+#include <glm.hpp>
 
 namespace nfe {
 
@@ -12,7 +13,7 @@ namespace nfe {
 		static void beginScene(OrthographicCamera& camera); // TODO: Take in scene attribs
 		static void endScene();
 
-		static void submit(const Shader* shader, const VertexArray* vertexArray);
+		static void submit(const Shader* shader, const VertexArray* vertexArray, const glm::mat4& transform = glm::mat4(1.0f));
 
 		inline static RendererAPI::API getApi() { return RendererAPI::getAPI(); }
 	private:

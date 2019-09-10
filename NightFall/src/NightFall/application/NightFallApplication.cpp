@@ -22,6 +22,9 @@ namespace nfe {
 		_layerStack = new LayerStack();
 		_layerStack->pushOverlay(_imGuiLayer = new ImGuiLayer());
 		LOG_ENGINE_INFO("Successfully initialized.");
+
+		//_window->setVSync(false);
+
 		return 0;
 	}
 	void NightFallApplication::run()
