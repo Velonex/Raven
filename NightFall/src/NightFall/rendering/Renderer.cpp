@@ -1,5 +1,6 @@
 #include "Renderer.h"
 #include <NightFall/platform/opengl/OpenGLRenderer.h>
+#include <NightFall/platform/opengl/OpenGLShader.h>
 #include <NightFall/utils/Assert.h>
 #include <glad/glad.h>
 
@@ -17,8 +18,8 @@ namespace nfe {
 	{
 		shader->bind();
 		vertexArray->bind();
-		shader->uploadUniformMat4("u_viewProjection", s_sceneData->_viewProjectionMatrix);
-		shader->uploadUniformMat4("u_transform", transform);
+		((OpenGLShader*)shader)->uploadUniformMat4("u_viewProjection", s_sceneData->_viewProjectionMatrix);
+		((OpenGLShader*)shader)->uploadUniformMat4("u_transform", transform);
 		RenderCommand::drawIndexed(vertexArray);
 	}
 }

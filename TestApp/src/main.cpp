@@ -2,6 +2,7 @@
 #include <imgui.h>
 #include <NightFall/application/Input.h>
 #include <gtc/matrix_transform.hpp>
+#include <NightFall/platform/opengl/OpenGLShader.h>
 
 class TestApp : public nfe::NightFallApplication {
 };
@@ -39,7 +40,7 @@ public:
 			unsigned int indices[3] = {
 				0, 1, 2
 			};
-
+			
 			_indexBuffer = nfe::IndexBuffer::create(indices, sizeof(indices));
 
 			_vertexArray->setIndexBuffer(_indexBuffer);
@@ -74,7 +75,7 @@ public:
 				color = v_Color;
 			}
 			)";
-			_shader = new nfe::Shader(vertexSrc, pixelSrc);
+			_shader = nfe::Shader::create(vertexSrc, pixelSrc);
 		}
 		{
 			_vertexArraysq = nfe::VertexArray::create();
@@ -122,17 +123,20 @@ public:
 			#version 330 core
 			
 			layout(location = 0) out vec4 color;
+
 			in vec3 v_Position;
+
+			uniform vec4 u_color;
+
 			void main()
 			{
-				color = vec4(0.2, 0.8, 0.3, 1.0);
+				color = u_color;
 			}
 			)";
-			_shadersq = new nfe::Shader(vertexSrc, pixelSrc);
+			_shadersq = nfe::Shader::create(vertexSrc, pixelSrc);
 		}
 	}
 	virtual void onUpdate(nfe::Timestep ts) override {
-		//LOG_TRACE("Frames per second: {}", 1 /  ts.getSeconds());
 
 		if (nfe::Input::isKeyPressed(KEY_A)) {
 			_squarePos.x -= ts * 0.5f;
@@ -149,8 +153,12 @@ public:
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), _squarePos);
 
+		glm::vec4 color(0.2, 0.8, 0.3, 1.0);
+
 		nfe::Renderer::beginScene(*_camera);
 		{
+			_shadersq->bind();
+			((nfe::OpenGLShader*)_shadersq)->uploadUniformFloat4("u_color", color);
 			nfe::Renderer::submit(_shadersq, _vertexArraysq, transform);
 			nfe::Renderer::submit(_shader, _vertexArray);
 		}

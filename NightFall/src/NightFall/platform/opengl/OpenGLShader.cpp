@@ -1,4 +1,4 @@
-#include <NightFall/rendering/Shader.h>
+#include "OpenGLShader.h"
 #include <vector>
 #include <glad/glad.h>
 #include <NightFall/utils/DebugTools.h>
@@ -6,7 +6,7 @@
 
 namespace nfe {
 
-	Shader::Shader(std::string vertexShaderSrc, std::string pixelShaderSrc) {
+	OpenGLShader::OpenGLShader(const std::string& vertexShaderSrc, const std::string& pixelShaderSrc) {
 		GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
 		// Send the vertex shader source code to GL
@@ -117,25 +117,53 @@ namespace nfe {
 		_programId = program;
 	}
 
-	Shader::~Shader()
+	OpenGLShader::~OpenGLShader()
 	{
 		glDeleteProgram(this->_programId);
 	}
 
-	void Shader::bind() const
+	void OpenGLShader::bind() const
 	{
 		glUseProgram(this->_programId);
 	}
 
-	void Shader::unbind() const
+	void OpenGLShader::unbind() const
 	{
 		glUseProgram(0);
 	}
-
-	void Shader::uploadUniformMat4(const char* name, const glm::mat4& mat) const
+	void OpenGLShader::uploadUniformInt(const std::string& name, int value) const
 	{
-		int i = glGetUniformLocation(this->_programId, name);
-		glUniformMatrix4fv(i, 1, false, glm::value_ptr(mat));
+		int i = glGetUniformLocation(this->_programId, name.c_str());
+		glUniform1i(i, value);
 	}
-
+	void OpenGLShader::uploadUniformFloat(const std::string& name, float value) const
+	{
+		int i = glGetUniformLocation(this->_programId, name.c_str());
+		glUniform1f(i, value);
+	}
+	void OpenGLShader::uploadUniformFloat2(const std::string& name, const glm::vec2& value) const
+	{
+		int i = glGetUniformLocation(this->_programId, name.c_str());
+		glUniform2f(i, value.x, value.y);
+	}
+	void OpenGLShader::uploadUniformFloat3(const std::string& name, const glm::vec3& value) const
+	{
+		int i = glGetUniformLocation(this->_programId, name.c_str());
+		glUniform3f(i, value.x, value.y, value.z);
+	}
+	void OpenGLShader::uploadUniformFloat4(const std::string& name, const glm::vec4& value) const
+	{
+		int i = glGetUniformLocation(this->_programId, name.c_str());
+		glUniform4f(i, value.x, value.y, value.z, value.w);
+	}
+	void OpenGLShader::uploadUniformMat3(const std::string& name, const glm::mat3& value) const
+	{
+		int i = glGetUniformLocation(this->_programId, name.c_str());
+		glUniformMatrix3fv(i, 1, false, glm::value_ptr(value));
+	}
+	void OpenGLShader::uploadUniformMat4(const std::string& name, const glm::mat4& value) const
+	{
+		int i = glGetUniformLocation(this->_programId, name.c_str());
+		glUniformMatrix4fv(i, 1, false, glm::value_ptr(value));
+	}
 }
