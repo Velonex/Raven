@@ -42,7 +42,7 @@ namespace nfe {
 		glBindVertexArray(0);
 	}
 
-	void nfe::OpenGLVertexArray::addVertexBuffer(const VertexBuffer* vertexBuffer)
+	void nfe::OpenGLVertexArray::addVertexBuffer(const ref<VertexBuffer>& vertexBuffer)
 	{
 		ASSERT(vertexBuffer->getLayout().getElements().size(), "Vertex Buffer has no layout!");
 
@@ -65,22 +65,22 @@ namespace nfe {
 #pragma warning(pop)
 			index++;
 		}
-		_vertexBuffers.push_back((VertexBuffer*)vertexBuffer);
+		_vertexBuffers.push_back((ref<VertexBuffer>&)vertexBuffer);
 	}
 
-	void nfe::OpenGLVertexArray::setIndexBuffer(const IndexBuffer* indexBuffer)
+	void nfe::OpenGLVertexArray::setIndexBuffer(const ref<IndexBuffer>& indexBuffer)
 	{
 		glBindVertexArray(_uid);
-		_indexBuffer = (IndexBuffer*)indexBuffer;
+		_indexBuffer = (ref<IndexBuffer>&)indexBuffer;
 		_indexBuffer->bind();
 	}
 
-	const std::vector<VertexBuffer*> OpenGLVertexArray::getVertexBuffers() const
+	const std::vector<ref<VertexBuffer>> OpenGLVertexArray::getVertexBuffers() const
 	{
 		return _vertexBuffers;
 	}
 
-	const IndexBuffer* nfe::OpenGLVertexArray::getIndexBuffer() const
+	const ref<IndexBuffer> nfe::OpenGLVertexArray::getIndexBuffer() const
 	{
 		return _indexBuffer;
 	}

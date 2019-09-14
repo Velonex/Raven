@@ -1,6 +1,7 @@
 #pragma once
 
 #include <NightFall/rendering/RendererAPI.h>
+#include <NightFall/core/Core.h>
 
 namespace nfe {
 
@@ -9,7 +10,7 @@ namespace nfe {
 		virtual void setClearColorRGBA(const glm::vec4& color) override;
 		virtual void clear() override;
 
-		virtual void drawIndexed(const VertexArray* vertexArray) override;
+		virtual void drawIndexed(const ref<VertexArray>& vertexArray) override;
 	};
 
 }

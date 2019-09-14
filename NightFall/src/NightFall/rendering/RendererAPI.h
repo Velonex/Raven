@@ -1,6 +1,7 @@
 #pragma once
 
 #include <glm.hpp>
+#include <NightFall/core/Core.h>
 #include "VertexArray.h"
 
 namespace nfe {
@@ -15,7 +16,7 @@ namespace nfe {
 		virtual void setClearColorRGBA(const glm::vec4& color) = 0;
 		virtual void clear() = 0;
 
-		virtual void drawIndexed(const VertexArray* vertexArray) = 0;
+		virtual void drawIndexed(const ref<VertexArray>& vertexArray) = 0;
 
 		inline static API getAPI() { return s_rendererAPI; }
 	private:

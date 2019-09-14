@@ -7,7 +7,7 @@
 									LOG_ENGINE_ERROR("Assertion failed: {}.", __VA_ARGS__);\
 									__debugbreak();\
 								}
-	#else 
+	#else
 		#define ASSERT(x, ...)
 	#endif
 #else

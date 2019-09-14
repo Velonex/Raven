@@ -1,6 +1,7 @@
 #pragma once
 
 #include <NightFall/rendering/Buffer.h>
+#include <NightFall/core/Core.h>
 
 namespace nfe {
 
@@ -11,11 +12,11 @@ namespace nfe {
 		virtual void bind() const = 0;
 		virtual void unbind() const = 0;
 
-		virtual void addVertexBuffer(const VertexBuffer* vertexBuffer) = 0;
-		virtual void setIndexBuffer(const IndexBuffer* indexBuffer) = 0;
+		virtual void addVertexBuffer(const ref<VertexBuffer>& vertexBuffer) = 0;
+		virtual void setIndexBuffer(const ref<IndexBuffer>& indexBuffer) = 0;
 
-		virtual const std::vector<VertexBuffer*> getVertexBuffers() const = 0;
-		virtual const IndexBuffer* getIndexBuffer() const = 0;
+		virtual const std::vector<ref<VertexBuffer>> getVertexBuffers() const = 0;
+		virtual const ref<IndexBuffer> getIndexBuffer() const = 0;
 
 		static VertexArray* create();
 	};

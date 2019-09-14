@@ -14,12 +14,12 @@ namespace nfe {
 	void Renderer::endScene()
 	{
 	}
-	void Renderer::submit(const Shader* shader, const VertexArray* vertexArray, const glm::mat4& transform)
+	void Renderer::submit(const ref<Shader>& shader, const ref<VertexArray>& vertexArray, const glm::mat4& transform)
 	{
 		shader->bind();
 		vertexArray->bind();
-		((OpenGLShader*)shader)->uploadUniformMat4("u_viewProjection", s_sceneData->_viewProjectionMatrix);
-		((OpenGLShader*)shader)->uploadUniformMat4("u_transform", transform);
+		std::dynamic_pointer_cast<OpenGLShader>(shader)->uploadUniformMat4("u_viewProjection", s_sceneData->_viewProjectionMatrix);
+		std::dynamic_pointer_cast<OpenGLShader>(shader)->uploadUniformMat4("u_transform", transform);
 		RenderCommand::drawIndexed(vertexArray);
 	}
 }

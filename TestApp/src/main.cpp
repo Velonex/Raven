@@ -3,6 +3,7 @@
 #include <NightFall/application/Input.h>
 #include <gtc/matrix_transform.hpp>
 #include <NightFall/platform/opengl/OpenGLShader.h>
+#include <NightFall/core/Core.h>
 
 class TestApp : public nfe::NightFallApplication {
 };
@@ -15,11 +16,11 @@ public:
 
 	}
 	virtual void onAttach() override {
-		_camera = new nfe::OrthographicCamera(-1.6f, 1.6f, -.9f, .9f);
+		_camera.reset(new nfe::OrthographicCamera(-1.6f, 1.6f, -.9f, .9f));
 		_squarePos = glm::vec3(0.0f);
 		{
 
-			_vertexArray = nfe::VertexArray::create();
+			_vertexArray.reset(nfe::VertexArray::create());
 
 			float vertices[3 * 7] = {
 				-0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
@@ -27,7 +28,7 @@ public:
 				 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
 			};
 
-			_vertexBuffer = nfe::VertexBuffer::create(vertices, sizeof(vertices));
+			_vertexBuffer.reset(nfe::VertexBuffer::create(vertices, sizeof(vertices)));
 
 			nfe::BufferLayout layout = {
 				{ nfe::ShaderDataType::Float3, "a_Position" },
@@ -41,7 +42,7 @@ public:
 				0, 1, 2
 			};
 			
-			_indexBuffer = nfe::IndexBuffer::create(indices, sizeof(indices));
+			_indexBuffer.reset(nfe::IndexBuffer::create(indices, sizeof(indices)));
 
 			_vertexArray->setIndexBuffer(_indexBuffer);
 
@@ -75,10 +76,10 @@ public:
 				color = v_Color;
 			}
 			)";
-			_shader = nfe::Shader::create(vertexSrc, pixelSrc);
+			_shader.reset(nfe::Shader::create(vertexSrc, pixelSrc));
 		}
 		{
-			_vertexArraysq = nfe::VertexArray::create();
+			_vertexArraysq.reset(nfe::VertexArray::create());
 
 			float vertices[3 * 4] = {
 				-0.75f, -0.75f, 0.0f,
@@ -88,7 +89,7 @@ public:
 			};
 
 
-			_vertexBuffersq = nfe::VertexBuffer::create(vertices, sizeof(vertices));
+			_vertexBuffersq.reset(nfe::VertexBuffer::create(vertices, sizeof(vertices)));
 
 			nfe::BufferLayout layout = {
 				{ nfe::ShaderDataType::Float3, "a_Position" }
@@ -99,7 +100,7 @@ public:
 
 			uint32_t indices[6] = { 0, 1, 2, 2, 3, 0 };
 
-			_indexBuffersq = nfe::IndexBuffer::create(indices, sizeof(indices));
+			_indexBuffersq.reset(nfe::IndexBuffer::create(indices, sizeof(indices)));
 
 			_vertexArraysq->setIndexBuffer(_indexBuffersq);
 
@@ -133,7 +134,7 @@ public:
 				color = u_color;
 			}
 			)";
-			_shadersq = nfe::Shader::create(vertexSrc, pixelSrc);
+			_shadersq.reset(nfe::Shader::create(vertexSrc, pixelSrc));
 		}
 	}
 	virtual void onUpdate(nfe::Timestep ts) override {
@@ -158,7 +159,7 @@ public:
 		nfe::Renderer::beginScene(*_camera);
 		{
 			_shadersq->bind();
-			((nfe::OpenGLShader*)_shadersq)->uploadUniformFloat4("u_color", color);
+			std::dynamic_pointer_cast<nfe::OpenGLShader>(_shadersq)->uploadUniformFloat4("u_color", color);
 			nfe::Renderer::submit(_shadersq, _vertexArraysq, transform);
 			nfe::Renderer::submit(_shader, _vertexArray);
 		}
@@ -166,19 +167,19 @@ public:
 	}
 	private:
 	// Rendering Triangle
-	nfe::VertexArray* _vertexArray;
-	nfe::VertexBuffer* _vertexBuffer;
-	nfe::IndexBuffer* _indexBuffer;
-	nfe::Shader* _shader;
+	ref<nfe::VertexArray> _vertexArray;
+	ref<nfe::VertexBuffer> _vertexBuffer;
+	ref<nfe::IndexBuffer> _indexBuffer;
+	ref<nfe::Shader> _shader;
 
 	// Rendering Square
-	nfe::VertexArray* _vertexArraysq;
-	nfe::VertexBuffer* _vertexBuffersq;
-	nfe::IndexBuffer* _indexBuffersq;
-	nfe::Shader* _shadersq;
+	ref<nfe::VertexArray> _vertexArraysq;
+	ref<nfe::VertexBuffer> _vertexBuffersq;
+	ref<nfe::IndexBuffer> _indexBuffersq;
+	ref<nfe::Shader> _shadersq;
 	glm::vec3 _squarePos;
 
-	nfe::OrthographicCamera* _camera;
+	ref<nfe::OrthographicCamera> _camera;
 };
 
 int main() {

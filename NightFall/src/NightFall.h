@@ -2,6 +2,7 @@
 
 #include <NightFall/application/NightFallApplication.h>
 #include <NightFall/logger/Logger.h>
+#include <NightFall/core/Core.h>
 
 // Event
 #include <NightFall/event/Event.h>
@@ -44,5 +45,6 @@
 #include <NightFall/rendering/RendererAPI.h>
 #include <NightFall/rendering/Shader.h>
 #include <NightFall/rendering/VertexArray.h>
-	// Camera
-	#include <NightFall/rendering/Camera.h>
+
+// Camera
+#include <NightFall/rendering/Camera.h>

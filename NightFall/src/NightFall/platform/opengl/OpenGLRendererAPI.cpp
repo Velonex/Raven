@@ -14,7 +14,7 @@ namespace nfe {
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
 
-	void OpenGLRendererAPI::drawIndexed(const VertexArray* vertexArray)
+	void OpenGLRendererAPI::drawIndexed(const ref<VertexArray>& vertexArray)
 	{
 		glDrawElements(GL_TRIANGLES, vertexArray->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, nullptr);
 	}

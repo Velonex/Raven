@@ -7,7 +7,7 @@ namespace nfe {
 	class RenderCommand
 	{
 	public:
-		inline static void drawIndexed(const VertexArray* vertexArray) {
+		inline static void drawIndexed(const ref<VertexArray> vertexArray) {
 			s_api->drawIndexed(vertexArray);
 		}
 
