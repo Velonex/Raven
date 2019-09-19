@@ -8,6 +8,11 @@ workspace "NightFall"
 		"Dist"
 	}
 	
+	flags
+	{
+		"MultiProcessorCompile"
+	}
+	
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 IncludeDir = {}
@@ -16,6 +21,7 @@ IncludeDir["GLFW"] = "NightFall/vendor/GLFW/include"
 IncludeDir["Glad"] = "NightFall/vendor/glad/include"
 IncludeDir["ImGui"] = "NightFall/vendor/ImGui"
 IncludeDir["glm"] = "NightFall/vendor/glm/glm"
+IncludeDir["stb_image"] = "NightFall/vendor/stb_image"
 
 group "Dependencies"
 	include "NightFall/vendor/GLFW"
@@ -36,7 +42,11 @@ project "NightFall"
 	files
 	{
 		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
+		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/vendor/stb_image/**.h",
+		"%{prj.name}/vendor/stb_image/**.cpp",
+		"%{prj.name}/vendor/glm/glm/**.hpp",
+		"%{prj.name}/vendor/glm/glm/**.inl"
 	}
 	includedirs
 	{
@@ -45,7 +55,8 @@ project "NightFall"
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.stb_image}"
 	}
 	links
 	{
@@ -98,7 +109,8 @@ project "TestApp"
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.stb_image}"
 	}
 	links
 	{

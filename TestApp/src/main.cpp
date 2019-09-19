@@ -4,6 +4,9 @@
 #include <gtc/matrix_transform.hpp>
 #include <NightFall/platform/opengl/OpenGLShader.h>
 #include <NightFall/core/Core.h>
+#include <stb_image.h>
+
+#include <glad/glad.h>
 
 class TestApp : public nfe::NightFallApplication {
 };
@@ -81,18 +84,19 @@ public:
 		{
 			_vertexArraysq.reset(nfe::VertexArray::create());
 
-			float vertices[3 * 4] = {
-				-0.75f, -0.75f, 0.0f,
-				 0.75f, -0.75f, 0.0f,
-				 0.75f,  0.75f, 0.0f,
-				-0.75f,  0.75f, 0.0f
+			float vertices[5 * 4] = {
+				-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+				 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+				 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+				-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 			};
 
 
 			_vertexBuffersq.reset(nfe::VertexBuffer::create(vertices, sizeof(vertices)));
 
 			nfe::BufferLayout layout = {
-				{ nfe::ShaderDataType::Float3, "a_Position" }
+				{ nfe::ShaderDataType::Float3, "a_Position" },
+				{ nfe::ShaderDataType::Float2, "v_TexCoord" }
 			};
 			_vertexBuffersq->setLayout(layout);
 
@@ -106,35 +110,43 @@ public:
 
 			std::string vertexSrc = R"(
 			#version 330 core
-			
+
 			layout(location = 0) in vec3 a_Position;
+			layout(location = 1) in vec2 a_TexCoord;
 
 			uniform mat4 u_viewProjection;
 			uniform mat4 u_transform;
 
-			out vec3 v_Position;
+			out vec2 v_TexCoord;
 
 			void main()
 			{
-				v_Position = a_Position;
+				v_TexCoord = a_TexCoord;
 				gl_Position = u_viewProjection * u_transform * vec4(a_Position, 1.0);
 			}
 			)";
 			std::string pixelSrc = R"(
 			#version 330 core
-			
+
 			layout(location = 0) out vec4 color;
 
-			in vec3 v_Position;
+			in vec2 v_TexCoord;
 
-			uniform vec4 u_color;
+			uniform sampler2D u_Texture;
 
 			void main()
 			{
-				color = u_color;
+				color = texture(u_Texture, v_TexCoord);
 			}
 			)";
+
 			_shadersq.reset(nfe::Shader::create(vertexSrc, pixelSrc));
+
+			_texsq = nfe::Texture2D::create("assets/textures/chess.png");
+
+			std::dynamic_pointer_cast<nfe::OpenGLShader>(_shadersq)->bind();
+			std::dynamic_pointer_cast<nfe::OpenGLShader>(_shadersq)->uploadUniformInt("u_Texture", 0);
+
 		}
 	}
 	virtual void onUpdate(nfe::Timestep ts) override {
@@ -154,12 +166,10 @@ public:
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), _squarePos);
 
-		glm::vec4 color(0.2, 0.8, 0.3, 1.0);
-
 		nfe::Renderer::beginScene(*_camera);
 		{
 			_shadersq->bind();
-			std::dynamic_pointer_cast<nfe::OpenGLShader>(_shadersq)->uploadUniformFloat4("u_color", color);
+			_texsq->bind();
 			nfe::Renderer::submit(_shadersq, _vertexArraysq, transform);
 			nfe::Renderer::submit(_shader, _vertexArray);
 		}
@@ -177,6 +187,7 @@ public:
 	ref<nfe::VertexBuffer> _vertexBuffersq;
 	ref<nfe::IndexBuffer> _indexBuffersq;
 	ref<nfe::Shader> _shadersq;
+	ref<nfe::Texture2D> _texsq;
 	glm::vec3 _squarePos;
 
 	ref<nfe::OrthographicCamera> _camera;

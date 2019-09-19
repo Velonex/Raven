@@ -44,6 +44,7 @@
 #include <NightFall/rendering/Renderer.h>
 #include <NightFall/rendering/RendererAPI.h>
 #include <NightFall/rendering/Shader.h>
+#include <NightFall/rendering/Texture.h>
 #include <NightFall/rendering/VertexArray.h>
 
 // Camera

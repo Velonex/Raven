@@ -2,6 +2,7 @@
 
 #include <NightFall/rendering/Buffer.h>
 #include <NightFall/core/Core.h>
+#include <stb_image.h>
 
 namespace nfe {
 
