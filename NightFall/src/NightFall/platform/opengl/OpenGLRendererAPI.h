@@ -11,6 +11,8 @@ namespace nfe {
 		virtual void clear() override;
 
 		virtual void drawIndexed(const ref<VertexArray>& vertexArray) override;
+
+		virtual void init() override;
 	};
 
 }

@@ -19,7 +19,9 @@ namespace nfe {
 		virtual void drawIndexed(const ref<VertexArray>& vertexArray) = 0;
 
 		inline static API getAPI() { return s_rendererAPI; }
-	private:
+
+		virtual void init() = 0;
+ 	private:
 		static API s_rendererAPI;
 	};
 

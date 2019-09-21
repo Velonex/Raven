@@ -1,6 +1,7 @@
 #include "NightFallApplication.h"
 #include <NightFall.h>
 #include <GLFW/glfw3.h>
+#include <NightFall/rendering/Renderer.h>
 
 namespace nfe {
 	NightFallApplication* NightFallApplication::_app = nullptr;
@@ -21,6 +22,7 @@ namespace nfe {
 		Input::setInstance(Input::createInput());
 		_layerStack = new LayerStack();
 		_layerStack->pushOverlay(_imGuiLayer = new ImGuiLayer());
+		Renderer::init();
 		LOG_ENGINE_INFO("Successfully initialized.");
 
 		return 0;

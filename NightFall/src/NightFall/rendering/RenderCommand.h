@@ -17,6 +17,9 @@ namespace nfe {
 		inline static void clear() {
 			s_api->clear();
 		}
+		inline static void init() {
+			s_api->init();
+		}
 	private:
 		static RendererAPI* s_api;
 	};

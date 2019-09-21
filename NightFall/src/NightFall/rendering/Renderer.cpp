@@ -22,4 +22,7 @@ namespace nfe {
 		std::dynamic_pointer_cast<OpenGLShader>(shader)->uploadUniformMat4("u_transform", transform);
 		RenderCommand::drawIndexed(vertexArray);
 	}
+	void Renderer::init() {
+		RenderCommand::init();
+	}
 }
