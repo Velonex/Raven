@@ -15,7 +15,6 @@ namespace nfe {
 		virtual void unbind() const = 0;
 
 		static ref<Shader> create(const std::string& vertexShaderSrc, const std::string& pixelShaderSrc);
-		static ref<Shader> create(const std::string& vertexShaderSrc, const std::string& pixelShaderSrc);
 	};
 	class ShaderLibrary {
 	public:
