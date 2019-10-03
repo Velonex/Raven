@@ -13,7 +13,7 @@ namespace nfe {
 			return;
 		}
 		spdlog::set_pattern("%^[%T] %n: %v%$");
-		_engineLogger = spdlog::stdout_color_mt("Spectral");
+		_engineLogger = spdlog::stdout_color_mt("NightFall");
 		_engineLogger->set_level(spdlog::level::level_enum::trace);
 		_appLogger = spdlog::stdout_color_mt(name);
 		_appLogger->set_level(spdlog::level::level_enum::trace);

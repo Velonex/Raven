@@ -22,6 +22,7 @@ IncludeDir["Glad"] = "NightFall/vendor/glad/include"
 IncludeDir["ImGui"] = "NightFall/vendor/ImGui"
 IncludeDir["glm"] = "NightFall/vendor/glm/glm"
 IncludeDir["stb_image"] = "NightFall/vendor/stb_image"
+IncludeDir["NightFallLib"] = "NightFallLib/src/"
 
 group "Dependencies"
 	include "NightFall/vendor/GLFW"
@@ -56,14 +57,61 @@ project "NightFall"
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
-		"%{IncludeDir.stb_image}"
+		"%{IncludeDir.stb_image}",
+		"%{IncludeDir.NightFallLib}"
 	}
 	links
 	{
 		"GLFW",
 		"Glad",
-		"ImGui"
+		"ImGui",
+		"NightFallLib"
 	}
+	filter "system:windows"
+		systemversion "latest"
+		
+		defines
+		{
+			"PLATFORM_WINDOWS"
+		}
+	filter "configurations:Debug"
+		defines "DEBUG"
+		symbols "on"
+		runtime "Debug"
+
+	filter "configurations:Release"
+		defines "RELEASE"
+		optimize "on"
+		runtime "Release"
+
+	filter "configurations:Dist"
+		defines "DIST"
+		optimize "on"
+		runtime "Release"
+project "NightFallLib"
+	location "NightFallLib"
+	kind "StaticLib"
+	language "C++"
+	cppdialect "C++17"
+	staticruntime "on"
+	
+	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+	
+	files
+	{
+		"%{prj.name}/src/**.h",
+		"%{prj.name}/src/**.cpp"
+	}
+	includedirs
+	{
+		"%{prj.name}/src",
+		"NightFall/src",
+		"%{IncludeDir.spdlog}",
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.stb_image}"
+	}
+	
 	filter "system:windows"
 		systemversion "latest"
 		
@@ -110,7 +158,8 @@ project "TestApp"
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
-		"%{IncludeDir.stb_image}"
+		"%{IncludeDir.stb_image}",
+		"%{IncludeDir.NightFallLib}"
 	}
 	links
 	{

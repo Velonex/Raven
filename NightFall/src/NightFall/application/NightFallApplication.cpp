@@ -2,6 +2,7 @@
 #include <NightFall.h>
 #include <GLFW/glfw3.h>
 #include <NightFall/rendering/Renderer.h>
+#include <NightFallLib/InitLib.h>
 
 namespace nfe {
 	NightFallApplication* NightFallApplication::_app = nullptr;
@@ -14,6 +15,7 @@ namespace nfe {
 			return -1;
 		}
 		Logger::init(name);
+		initLib();
 		LOG_ENGINE_TRACE("Initializing...");
 		_eventHandler = new EventHandler();
 		WindowProps props(1280, 720, name);

@@ -140,9 +140,7 @@ public:
 			}
 			)";
 
-			ref<nfe::Shader> s = nfe::Shader::create(vertexSrc, pixelSrc);
-
-			_shaderLib.add("texture", s);
+			ref<nfe::Shader> s = _shaderLib.load("assets/shaders/texture.glsl");
 
 			_texsq = nfe::Texture2D::create("assets/textures/chess.png");
 			_texsq2 = nfe::Texture2D::create("assets/textures/blend.png");
