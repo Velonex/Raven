@@ -67,6 +67,7 @@ namespace nfe {
 		std::unordered_map<std::string, std::string> sources;
 		const char* token = "#type ";
 		std::vector<std::string> vec = split(source, token);
+		LIB_ASSERT(vec.size() != 1, "Syntax error");
 		if (source.find("#type ") != 0) {
 			vec.erase(vec.begin());
 		}
@@ -74,8 +75,6 @@ namespace nfe {
 			size_t end = s.find_first_of("\r\n	");
 			sources[s.substr(0, end)] = s.substr(end, s.length());
 		}
-		for(std::pair<std::string, std::string> s : sources)
-			LOG_LIB_TRACE("[{0}]: {1}", s.first, s.second); 
 		return sources;
 	}
 }
