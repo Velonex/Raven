@@ -22,18 +22,18 @@ namespace nfe {
 			_initialized = true;
 		}
 		static NightFallApplication* getInstance() { return _app; }
-		EventHandler* getEventHandler() { return _eventHandler; }
-		Window* getWindow() { return _window; }
-		LayerStack* getLayerStack() { return _layerStack; }
+		EventHandler* getEventHandler() { return _eventHandler.get(); }
+		Window* getWindow() { return _window.get(); }
+		LayerStack* getLayerStack() { return _layerStack.get(); }
 		virtual void onEvent(Event* e) override;
 	private:
 		static NightFallApplication* _app;
 		static bool _initialized;
 	private:
-		EventHandler* _eventHandler;
-		Window* _window;
+		scope<EventHandler> _eventHandler;
+		scope<Window> _window;
 		ImGuiLayer* _imGuiLayer;
-		LayerStack* _layerStack;
+		scope<LayerStack> _layerStack;
 		bool _running = true;
 		float _lastFrameTime = 0.f;
 	};

@@ -21,7 +21,7 @@ namespace nfe {
 			s_api->init();
 		}
 	private:
-		static RendererAPI* s_api;
+		static scope<RendererAPI> s_api;
 	};
 
 }

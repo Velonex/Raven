@@ -17,12 +17,12 @@ namespace nfe {
 		Logger::init(name);
 		initLib();
 		LOG_ENGINE_TRACE("Initializing...");
-		_eventHandler = new EventHandler();
+		_eventHandler = createScope<EventHandler>();
 		WindowProps props(1280, 720, name);
-		_window = Window::createWindow(props);
+		_window.reset(Window::createWindow(props));
 		_eventHandler->subscribe(this, EventType::ALL);
 		Input::setInstance(Input::createInput());
-		_layerStack = new LayerStack();
+		_layerStack = createScope<LayerStack>();
 		_layerStack->pushOverlay(_imGuiLayer = new ImGuiLayer());
 		Renderer::init();
 		LOG_ENGINE_INFO("Successfully initialized.");
@@ -67,14 +67,7 @@ namespace nfe {
 			return -1;
 		}
 		LOG_ENGINE_TRACE("Stopping...");
-		for (auto it = _layerStack->end(); it != _layerStack->begin(); )
-		{
-			(*--it)->onDetach();
-		}
 		_layerStack->~LayerStack();
-		delete _window;
-		delete _eventHandler;
-		delete _layerStack;
 		LOG_ENGINE_INFO("Stopped.");
 		return 0;
 	}

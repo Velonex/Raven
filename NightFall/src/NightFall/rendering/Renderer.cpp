@@ -6,7 +6,7 @@
 
 
 namespace nfe {
-	Renderer::SceneData* Renderer::s_sceneData = new SceneData;
+	scope<Renderer::SceneData> Renderer::s_sceneData = createScope<SceneData>();
 	void Renderer::beginScene(OrthographicCamera& camera)
 	{
 		s_sceneData->_viewProjectionMatrix = camera.getViewProjectionMatrix();

@@ -24,6 +24,6 @@ namespace nfe {
 		struct SceneData {
 			glm::mat4 _viewProjectionMatrix;
 		};
-		static SceneData* s_sceneData;
+		static scope<SceneData> s_sceneData;
 	};
 }

@@ -3,6 +3,6 @@
 
 namespace nfe {
 		
-	RendererAPI* RenderCommand::s_api = new OpenGLRendererAPI();
+	scope<RendererAPI> RenderCommand::s_api = createScope<OpenGLRendererAPI>();
 
 }

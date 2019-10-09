@@ -6,10 +6,10 @@ namespace nfe {
 	}
 	LayerStack::~LayerStack()
 	{
-		for (Layer* l : _layers)
+		for (Layer* l : _layers) {
+			l->onDetach();
 			_layers.pop_back();
-		//for (Layer* l : _layers)
-		//	delete l;
+		}
 	}
 	void LayerStack::pushLayer(Layer* layer)
 	{

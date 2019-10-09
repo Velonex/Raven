@@ -2,7 +2,7 @@
 
 namespace nfe {
 
-	Input* Input::_instance = nullptr;
+	scope<Input> Input::_instance;
 	WindowsInput::WindowsInput()
 	{
 		_window = (GLFWwindow*)NightFallApplication::getInstance()->getWindow()->getNativeWindow();

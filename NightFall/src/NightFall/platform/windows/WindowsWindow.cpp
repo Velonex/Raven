@@ -35,7 +35,7 @@ namespace nfe {
 			glfwInitialized = true;
 		}
 		_window = glfwCreateWindow(props.width, props.height, props.title.c_str(), nullptr, nullptr);
-		_context = GraphicsContext::createGraphicsContext(_window);
+		_context.reset(GraphicsContext::createGraphicsContext(_window));
 		_context->init();
 		glfwSetWindowUserPointer(_window, &_windowData);
 		setVSync(true);
@@ -140,7 +140,7 @@ namespace nfe {
 
 	GraphicsContext* WindowsWindow::getGraphicsContext() const
 	{
-		return _context;
+		return _context.get();
 	}
 
 	Window* Window::createWindow(const WindowProps& props) {

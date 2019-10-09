@@ -18,8 +18,8 @@ namespace nfe {
 		virtual float _getMouseY() = 0;
 		virtual std::pair<float, float> _getMousePos() = 0;
 	private:
-		static void setInstance(Input* instance) { _instance = instance; }
+		static void setInstance(Input* instance) { _instance.reset(instance); }
 		static Input* createInput();
-		static Input* _instance;
+		static scope<Input> _instance;
 	};
 }

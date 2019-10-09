@@ -1,4 +1,5 @@
 #pragma once
+#include <NightFall/core/Core.h>
 #include <NightFall/logger/Logger.h>
 #include <NightFall/application/Window.h>
 #define GLFW_INCLUDE_NONE
@@ -27,7 +28,7 @@ namespace nfe {
 		virtual void _shutdown();
 	private:
 		GLFWwindow* _window;
-		GraphicsContext* _context;
+		scope<GraphicsContext> _context;
 		struct _WindowData {
 			unsigned int width, height;
 			std::string title;

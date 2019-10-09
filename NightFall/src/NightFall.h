@@ -1,8 +1,8 @@
 #pragma once
 
+#include <NightFall/core/Core.h>
 #include <NightFall/application/NightFallApplication.h>
 #include <NightFall/logger/Logger.h>
-#include <NightFall/core/Core.h>
 
 // Event
 #include <NightFall/event/Event.h>
