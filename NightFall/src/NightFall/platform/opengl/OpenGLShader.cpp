@@ -96,6 +96,7 @@ namespace nfe {
 		}
 
 		for (GLuint i = 0; i < counter; i++) {
+			glDeleteShader(shaderIDs[i]);
 			glDetachShader(program, shaderIDs[i]);
 		};
 		_programId = program;
