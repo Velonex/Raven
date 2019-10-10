@@ -1,12 +1,12 @@
 [submodule "NightFall/vendor/spdlog"]
-	path = NightFall/vendor/spdlog
+	path = Raven/vendor/spdlog
 	url = https://github.com/gabime/spdlog
 [submodule "NightFall/vendor/GLFW"]
-	path = NightFall/vendor/GLFW
+	path = Raven/vendor/GLFW
 	url = https://github.com/Velonex/glfw
 [submodule "NightFall/vendor/ImGui"]
-	path = NightFall/vendor/ImGui
+	path = Raven/vendor/ImGui
 	url = https://github.com/Velonex/imgui
 [submodule "NightFall/vendor/glm"]
-	path = NightFall/vendor/glm
+	path = Raven/vendor/glm
 	url = https://github.com/g-truc/glm

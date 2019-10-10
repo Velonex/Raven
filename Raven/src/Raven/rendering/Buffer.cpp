@@ -1,0 +1,27 @@
+#include "Buffer.h"
+#include "Renderer.h"
+#include <Raven/utils/Assert.h>
+#include <Raven/platform/opengl/OpenGLBuffer.h>
+
+namespace rvn {
+
+	VertexBuffer* VertexBuffer::create(float* vertices, uint32_t size)
+	{
+		switch (RendererAPI::getAPI()) {
+		case RendererAPI::API::None: ASSERT(false, "RendererAPI::None is currently not supported"); return nullptr;
+		case RendererAPI::API::OpenGL: return new OpenGLVertexBuffer(vertices, size);
+		}
+		ASSERT(false, "Unknown RendererAPI");
+		return nullptr;
+	}
+
+	IndexBuffer* IndexBuffer::create(uint32_t* indices, uint32_t count)
+	{
+		switch (RendererAPI::getAPI()) {
+		case RendererAPI::API::None: ASSERT(false, "RendererAPI::None is currently not supported"); return nullptr;
+		case RendererAPI::API::OpenGL: return new OpenGLIndexBuffer(indices, count);
+		}
+		ASSERT(false, "Unknown RendererAPI");
+		return nullptr;
+	}
+}

@@ -1,4 +1,4 @@
-workspace "NightFall"
+workspace "Raven"
 	architecture "x64"
 	startproject "TestApp"
 	
@@ -16,23 +16,23 @@ workspace "NightFall"
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 IncludeDir = {}
-IncludeDir["spdlog"] = "NightFall/vendor/spdlog/include"
-IncludeDir["GLFW"] = "NightFall/vendor/GLFW/include"
-IncludeDir["Glad"] = "NightFall/vendor/glad/include"
-IncludeDir["ImGui"] = "NightFall/vendor/ImGui"
-IncludeDir["glm"] = "NightFall/vendor/glm/glm"
-IncludeDir["stb_image"] = "NightFall/vendor/stb_image"
-IncludeDir["NightFallLib"] = "NightFallLib/src/"
+IncludeDir["spdlog"] = "Raven/vendor/spdlog/include"
+IncludeDir["GLFW"] = "Raven/vendor/GLFW/include"
+IncludeDir["Glad"] = "Raven/vendor/glad/include"
+IncludeDir["ImGui"] = "Raven/vendor/ImGui"
+IncludeDir["glm"] = "Raven/vendor/glm/glm"
+IncludeDir["stb_image"] = "Raven/vendor/stb_image"
+IncludeDir["RavenLib"] = "RavenLib/src/"
 
 group "Dependencies"
-	include "NightFall/vendor/GLFW"
-	include "NightFall/vendor/glad"
-	include "NightFall/vendor/ImGui"	
+	include "Raven/vendor/GLFW"
+	include "Raven/vendor/glad"
+	include "Raven/vendor/ImGui"	
 
 group ""
 
-project "NightFall"
-	location "NightFall"
+project "Raven"
+	location "Raven"
 	kind "StaticLib"
 	language "C++"
 	cppdialect "C++17"
@@ -58,14 +58,14 @@ project "NightFall"
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb_image}",
-		"%{IncludeDir.NightFallLib}"
+		"%{IncludeDir.RavenLib}"
 	}
 	links
 	{
 		"GLFW",
 		"Glad",
 		"ImGui",
-		"NightFallLib"
+		"RavenLib"
 	}
 	filter "system:windows"
 		systemversion "latest"
@@ -88,8 +88,8 @@ project "NightFall"
 		defines "DIST"
 		optimize "on"
 		runtime "Release"
-project "NightFallLib"
-	location "NightFallLib"
+project "RavenLib"
+	location "RavenLib"
 	kind "StaticLib"
 	language "C++"
 	cppdialect "C++17"
@@ -106,7 +106,7 @@ project "NightFallLib"
 	includedirs
 	{
 		"%{prj.name}/src",
-		"NightFall/src",
+		"Raven/src",
 		"%{IncludeDir.spdlog}",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb_image}"
@@ -152,18 +152,18 @@ project "TestApp"
 	includedirs
 	{
 		"%{prj.name}/src",
-		"NightFall/src",
+		"Raven/src",
 		"%{IncludeDir.spdlog}",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb_image}",
-		"%{IncludeDir.NightFallLib}"
+		"%{IncludeDir.RavenLib}"
 	}
 	links
 	{
-		"NightFall"
+		"Raven"
 	}
 	
 	filter "system:windows"
