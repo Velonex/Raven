@@ -15,6 +15,9 @@ namespace rvn {
 		float operator*=(float rhs) {
 			return _time * rhs;
 		}
+		operator float() {
+			return _time;
+		}
 	private:
 		float _time = 0.0f;
 	};

@@ -8,6 +8,8 @@ namespace rvn {
 	public:
 		OrthographicCamera(float left, float right, float bottom, float top);
 
+		void setProjection(float left, float right, float bottom, float top);
+
 		void setRotation(float rotation) { _rotation = rotation; recalculateViewMatrix(); }
 		float getRotation() const { return _rotation; }
 

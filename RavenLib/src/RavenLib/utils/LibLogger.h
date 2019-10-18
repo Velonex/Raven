@@ -22,7 +22,7 @@ namespace rvn {
 	class LibLogger
 	{
 	public:
-		static void init(char* app);
+		static void init();
 	};
 }
 #define LOG_LIB_TRACE(...)

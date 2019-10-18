@@ -48,4 +48,5 @@
 #include <Raven/rendering/VertexArray.h>
 
 // Camera
-#include <Raven/rendering/Camera.h>
+#include <Raven/rendering/OrthographicCamera.h>
+#include <Raven/rendering/OrthographicCameraController.h>

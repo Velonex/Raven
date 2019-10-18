@@ -2,7 +2,7 @@
 
 #include "RenderCommand.h"
 
-#include "Camera.h"
+#include "OrthographicCamera.h"
 #include "Shader.h"
 #include <glm.hpp>
 #include <Raven/core/Core.h>
@@ -20,6 +20,7 @@ namespace rvn {
 
 		inline static RendererAPI::API getApi() { return RendererAPI::getAPI(); }
 
+		static void onWindowResize(uint32_t width, uint32_t height);
 	private:
 		struct SceneData {
 			glm::mat4 _viewProjectionMatrix;

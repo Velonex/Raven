@@ -20,7 +20,7 @@ namespace rvn {
 #else 
 namespace rvn {
 
-	void LibLogger::init(char* name)
+	void LibLogger::init()
 	{
 
 	}

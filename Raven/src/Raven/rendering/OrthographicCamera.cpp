@@ -1,4 +1,4 @@
-#include "Camera.h"
+#include "OrthographicCamera.h"
 
 #include <gtc/matrix_transform.hpp>
 
@@ -6,6 +6,11 @@ namespace rvn {
 	OrthographicCamera::OrthographicCamera(float left, float right, float bottom, float top)
 		: _projectionMatrix(glm::ortho(left, right, bottom, top, -1.0f, 1.0f)), _viewMatrix(1.0f)
 	{
+		_vpMatrix = _projectionMatrix * _viewMatrix;
+	}
+	void OrthographicCamera::setProjection(float left, float right, float bottom, float top)
+	{
+		_projectionMatrix = glm::ortho(left, right, bottom, top, -1.0f, 1.0f);
 		_vpMatrix = _projectionMatrix * _viewMatrix;
 	}
 	void OrthographicCamera::recalculateViewMatrix()

@@ -19,7 +19,7 @@ public:
 
 	}
 	virtual void onAttach() override {
-		_camera.reset(new rvn::OrthographicCamera(-1.6f, 1.6f, -.9f, .9f));
+		_cameraController = rvn::createRef<rvn::OrthographicCameraController>(1280.0f / 720.0f);
 		_squarePos = glm::vec3(0.0f);
 		_vertexArraysq.reset(rvn::VertexArray::create());
 
@@ -55,24 +55,15 @@ public:
 		std::dynamic_pointer_cast<rvn::OpenGLShader>(s)->bind();
 		std::dynamic_pointer_cast<rvn::OpenGLShader>(s)->uploadUniformInt("u_Texture", 0);
 	}
+	virtual void onEvent(rvn::Event* e) override {
+		_cameraController->onEvent(e);
+	}
 	virtual void onUpdate(rvn::Timestep ts) override {
-
-		if (rvn::Input::isKeyPressed(KEY_A)) {
-			_squarePos.x -= ts * 0.5f;
-		}
-		if (rvn::Input::isKeyPressed(KEY_D)) {
-			_squarePos.x += ts * 0.5f;
-		}
-		if (rvn::Input::isKeyPressed(KEY_W)) {
-			_squarePos.y += ts * 0.5f;
-		}
-		if (rvn::Input::isKeyPressed(KEY_S)) {
-			_squarePos.y -= ts * 0.5f;
-		}
+		_cameraController->onUpdate(ts);
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), _squarePos);
 
-		rvn::Renderer::beginScene(*_camera);
+		rvn::Renderer::beginScene(_cameraController->getCamera());
 		{
 			auto textureShader = _shaderLib.get("texture");
 			_texsq->bind();
@@ -92,7 +83,7 @@ public:
 	glm::vec3 _squarePos;
 
 	rvn::ShaderLibrary _shaderLib;
-	ref<rvn::OrthographicCamera> _camera;
+	ref<rvn::OrthographicCameraController> _cameraController;
 };
 
 int main() {

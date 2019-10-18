@@ -6,8 +6,9 @@
 #include <Raven/rendering/Shader.h>
 #include <Raven/rendering/Buffer.h>
 #include <Raven/rendering/VertexArray.h>
-#include <Raven/rendering/Camera.h>
+#include <Raven/rendering/OrthographicCamera.h>
 #include <Raven/core/Timestep.h>
+#include <Raven/event/events/WindowEvents.h>
 
 namespace rvn {
 
@@ -27,6 +28,8 @@ namespace rvn {
 		LayerStack* getLayerStack() { return _layerStack.get(); }
 		virtual void onEvent(Event* e) override;
 	private:
+		void onWindowResize(WindowResizeEvent* e);
+	private:
 		static Application* _app;
 		static bool _initialized;
 	private:
@@ -35,6 +38,7 @@ namespace rvn {
 		ImGuiLayer* _imGuiLayer;
 		scope<LayerStack> _layerStack;
 		bool _running = true;
+		bool _minimized = false;
 		float _lastFrameTime = 0.f;
 	};
 	typedef Application NFApp;

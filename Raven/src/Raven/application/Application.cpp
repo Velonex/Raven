@@ -42,9 +42,12 @@ namespace rvn {
 
 			RenderCommand::setClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
 			RenderCommand::clear();
-			for (auto it = _layerStack->end(); it != _layerStack->begin(); )
+			if (!_minimized)
 			{
-				(*--it)->onUpdate(timestep);
+				for (auto it = _layerStack->end(); it != _layerStack->begin(); )
+				{
+					(*--it)->onUpdate(timestep);
+				}
 			}
 			_imGuiLayer->beginFrame();
 			{
@@ -81,8 +84,20 @@ namespace rvn {
 		case EventType::EVENT_WINDOW_CLOSE:
 			_running = false;
 			break;
+		case EventType::EVENT_WINDOW_RESIZE:
+			onWindowResize((WindowResizeEvent*)e);
+			break;
 		default:
 			return;
 		}
+	}
+	void Application::onWindowResize(WindowResizeEvent* e)
+	{
+		if (e->getHeight() == 0 || e->getWidth() == 0) {
+			_minimized = true;
+			return;
+		}
+		_minimized = false;
+		Renderer::onWindowResize(e->getWidth(), e->getHeight());
 	}
 }
