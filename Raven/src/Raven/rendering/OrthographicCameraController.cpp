@@ -6,7 +6,7 @@
 namespace rvn {
 
 	OrthographicCameraController::OrthographicCameraController(float aspectRatio, bool rotation)
-		: _aspectRatio(aspectRatio), _camera(-_aspectRatio * _zoomLevel, _aspectRatio * _zoomLevel, -_zoomLevel, _zoomLevel), _rotation(rotation)
+		: _aspectRatio(aspectRatio), _camera(-_aspectRatio * _zoomLevel, _aspectRatio * _zoomLevel, -_zoomLevel, _zoomLevel), _doRotation(rotation)
 	{
 	}
 
