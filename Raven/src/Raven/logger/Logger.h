@@ -19,11 +19,13 @@ namespace rvn{
 #define LOG_ENGINE_INFO(...)     ::rvn::Logger::getEngineLogger()->info(__VA_ARGS__)
 #define LOG_ENGINE_WARN(...)     ::rvn::Logger::getEngineLogger()->warn(__VA_ARGS__)
 #define LOG_ENGINE_ERROR(...)    ::rvn::Logger::getEngineLogger()->error(__VA_ARGS__)
+#define LOG_ENGINE_CRITICAL(...) ::rvn::Logger::getEngineLogger()->critical(__VA_ARGS__)
 
 #define LOG_TRACE(...)	      ::rvn::Logger::getAppLogger()->trace(__VA_ARGS__)
 #define LOG_INFO(...)	      ::rvn::Logger::getAppLogger()->info(__VA_ARGS__)
 #define LOG_WARN(...)	      ::rvn::Logger::getAppLogger()->warn(__VA_ARGS__)
 #define LOG_ERROR(...)	      ::rvn::Logger::getAppLogger()->error(__VA_ARGS__)
+#define LOG_CRITICAL(...)     ::rvn::Logger::getAppLogger()->critical(__VA_ARGS__)
 #else
 namespace rvn {
 	class Logger

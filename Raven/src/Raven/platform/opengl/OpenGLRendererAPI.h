@@ -15,6 +15,15 @@ namespace rvn {
 		virtual void init() override;
 
 		virtual void setViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height) override;
+		
+		static void OpenGLMessageCallback(
+			unsigned source,
+			unsigned type,
+			unsigned id,
+			unsigned severity,
+			int length,
+			const char* message,
+			const void* userParam);
 	};
 
 }

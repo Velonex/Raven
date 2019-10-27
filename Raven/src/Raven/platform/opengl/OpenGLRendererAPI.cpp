@@ -27,4 +27,20 @@ namespace rvn {
 	{
 		glViewport(x, y, width, height);
 	}
+	void OpenGLRendererAPI::OpenGLMessageCallback(unsigned source,
+		unsigned type,
+		unsigned id,
+		unsigned severity,
+		int length,
+		const char* message,
+		const void* userParam)
+	{
+		switch (severity)
+		{
+		case GL_DEBUG_SEVERITY_HIGH:			LOG_ENGINE_CRITICAL(message); return;
+		case GL_DEBUG_SEVERITY_MEDIUM:			LOG_ENGINE_ERROR(message); return;
+		case GL_DEBUG_SEVERITY_LOW:				LOG_ENGINE_WARN(message); return;
+		//case GL_DEBUG_SEVERITY_NOTIFICATION:	LOG_ENGINE_TRACE(message); return;
+		}
+	}
 }
