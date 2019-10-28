@@ -24,6 +24,11 @@ namespace rvn {
 
 		void uploadUniformMat3(const std::string& name, const glm::mat3& value) const;
 		void uploadUniformMat4(const std::string& name, const glm::mat4& value) const;
+
+		virtual void setFloat3(const std::string& name, const glm::vec3& value) override;
+		virtual void setFloat4(const std::string& name, const glm::vec4& value) override;
+		virtual void setMat3(const std::string& name, const glm::mat3& value) override;
+		virtual void setMat4(const std::string& name, const glm::mat4& value) override;
 	private:
 		void compileShaders(std::unordered_map<std::string, std::string> strSource);
 	private:

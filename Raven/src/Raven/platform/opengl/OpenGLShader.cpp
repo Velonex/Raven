@@ -156,4 +156,20 @@ namespace rvn {
 		int i = glGetUniformLocation(this->_programId, name.c_str());
 		glUniformMatrix4fv(i, 1, false, glm::value_ptr(value));
 	}
+	void OpenGLShader::setFloat3(const std::string & name, const glm::vec3 & value)
+	{
+		uploadUniformFloat3(name, value);
+	}
+	void OpenGLShader::setFloat4(const std::string & name, const glm::vec4 & value)
+	{
+		uploadUniformFloat4(name, value);
+	}
+	void OpenGLShader::setMat3(const std::string & name, const glm::mat3 & value)
+	{
+		uploadUniformMat3(name, value);
+	}
+	void OpenGLShader::setMat4(const std::string & name, const glm::mat4 & value)
+	{
+		uploadUniformMat4(name, value);
+	}
 }
