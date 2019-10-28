@@ -1,5 +1,6 @@
 #pragma once
 #include <Raven.h>
+#include <Raven/rendering/Renderer2D.h>
 
 class Sandbox2D : public rvn::Layer {
 public:
@@ -11,11 +12,8 @@ public:
 		_cameraController->onEvent(e);
 	}
 	virtual void onUpdate(rvn::Timestep ts) override;
+	virtual void onImGuiRender() override;
 private:
-	// Rendering Square
-	ref<rvn::VertexArray> _vertexArraysq;
-	glm::vec3 _squarePos;
-
-	rvn::ShaderLibrary _shaderLib;
 	ref<rvn::OrthographicCameraController> _cameraController;
+	glm::vec4 _squareColor = { 0.9f, 0.2f, 0.7f, 1.0f };
 };

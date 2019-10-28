@@ -2,6 +2,7 @@
 #include <Raven.h>
 #include <GLFW/glfw3.h>
 #include <Raven/rendering/Renderer.h>
+#include <Raven/rendering/Renderer2D.h>
 #include <RavenLib/InitLib.h>
 
 namespace rvn {
@@ -25,6 +26,7 @@ namespace rvn {
 		_layerStack = createScope<LayerStack>();
 		_layerStack->pushOverlay(_imGuiLayer = new ImGuiLayer());
 		Renderer::init();
+		Renderer2D::init();
 		LOG_ENGINE_INFO("Successfully initialized.");
 
 		return 0;
@@ -71,6 +73,7 @@ namespace rvn {
 		}
 		LOG_ENGINE_TRACE("Stopping...");
 		_layerStack->~LayerStack();
+		Renderer2D::shutdown();
 		LOG_ENGINE_INFO("Stopped.");
 		return 0;
 	}
