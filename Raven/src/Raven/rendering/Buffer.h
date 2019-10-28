@@ -2,7 +2,7 @@
 
 #include <string>
 #include <vector>
-#include <Raven/utils/Assert.h>
+#include <Raven/core/Core.h>
 #include <initializer_list>
 
 namespace rvn {

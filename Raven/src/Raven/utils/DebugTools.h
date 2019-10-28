@@ -1,5 +1,4 @@
 #pragma once
-#include "Assert.h"
 
 #ifndef DIST
 	#ifdef PLATFORM_WINDOWS

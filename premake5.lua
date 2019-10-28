@@ -69,11 +69,6 @@ project "Raven"
 	}
 	filter "system:windows"
 		systemversion "latest"
-		
-		defines
-		{
-			"PLATFORM_WINDOWS"
-		}
 	filter "configurations:Debug"
 		defines "DEBUG"
 		symbols "on"
@@ -168,11 +163,6 @@ project "TestApp"
 	
 	filter "system:windows"
 		systemversion "latest"
-		
-		defines
-		{
-			"PLATFORM_WINDOWS"
-		}
 	filter "configurations:Debug"
 		defines "DEBUG"
 		symbols "on"
