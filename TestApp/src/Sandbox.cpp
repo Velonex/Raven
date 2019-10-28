@@ -8,7 +8,7 @@
 void Sandbox::onAttach() {
 		_cameraController = rvn::createRef<rvn::OrthographicCameraController>(1280.0f / 720.0f, true);
 		_squarePos = glm::vec3(0.0f);
-		_vertexArraysq.reset(rvn::VertexArray::create());
+		_vertexArraysq = rvn::VertexArray::create();
 
 		float vertices[5 * 4] = {
 			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
