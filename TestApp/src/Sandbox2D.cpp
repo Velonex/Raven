@@ -13,6 +13,7 @@ void Sandbox2D::onUpdate(rvn::Timestep ts) {
 	_cameraController->onUpdate(ts);
 	rvn::Renderer2D::beginScene(_cameraController->getCamera());
 	rvn::Renderer2D::drawQuad({ 0.0f, 0.0f }, { 1.0f, 1.0f }, _squareColor);
+	rvn::Renderer2D::drawQuad({ -0.45f, -0.45f, 0.0f }, { 0.5f, 0.5f }, { 0.2f, 0.8f, 0.3f, 1.0f });
 	rvn::Renderer2D::endScene();
 }
 

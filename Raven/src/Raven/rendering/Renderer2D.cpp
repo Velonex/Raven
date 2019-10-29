@@ -2,6 +2,7 @@
 #include <Raven/rendering/VertexArray.h>
 #include <Raven/rendering/Shader.h>
 #include <Raven/rendering/RenderCommand.h>
+#include <gtc/matrix_transform.hpp>
 
 
 namespace rvn {
@@ -51,7 +52,6 @@ namespace rvn {
 	{
 		s_data->flatColorShader->bind();
 		s_data->flatColorShader->setMat4("u_viewProjection", camera.getViewProjectionMatrix());
-		s_data->flatColorShader->setMat4("u_transform", glm::mat4(1.0f));
 	}
 	void Renderer2D::endScene()
 	{
@@ -64,6 +64,10 @@ namespace rvn {
 	{
 		s_data->flatColorShader->bind();
 		s_data->flatColorShader->setFloat4("u_color", color);
+
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) *
+			glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+		s_data->flatColorShader->setMat4("u_transform", transform);
 
 		s_data->quadVertexArray->bind();
 		RenderCommand::drawIndexed(s_data->quadVertexArray);
