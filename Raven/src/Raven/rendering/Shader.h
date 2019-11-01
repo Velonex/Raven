@@ -20,6 +20,7 @@ namespace rvn {
 		static ref<Shader> create(const std::string& filepath);
 
 		// Uniforms
+		virtual void setInt(const std::string& name, int value) = 0;
 		virtual void setFloat3(const std::string& name, const glm::vec3& value) = 0;
 		virtual void setFloat4(const std::string& name, const glm::vec4& value) = 0;
 		virtual void setMat3(const std::string& name, const glm::mat3& value) = 0;

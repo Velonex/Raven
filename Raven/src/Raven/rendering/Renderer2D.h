@@ -1,5 +1,6 @@
 #pragma once
 #include <Raven/rendering/OrthographicCamera.h>
+#include <Raven/rendering/Texture.h>
 
 namespace rvn {
 
@@ -13,6 +14,8 @@ namespace rvn {
 
 		static void drawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color);
 		static void drawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color);
+		static void drawQuad(const glm::vec2& position, const glm::vec2& size, const ref<Texture2D>& texture);
+		static void drawQuad(const glm::vec3& position, const glm::vec2& size, const ref<Texture2D>& texture);
 	};
 
 }
