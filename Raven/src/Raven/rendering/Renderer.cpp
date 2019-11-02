@@ -1,5 +1,4 @@
 #include "Renderer.h"
-#include <Raven/platform/opengl/OpenGLRenderer.h>
 #include <Raven/platform/opengl/OpenGLShader.h>
 #include <Raven/utils/Assert.h>
 #include <glad/glad.h>
@@ -18,8 +17,8 @@ namespace rvn {
 	{
 		shader->bind();
 		vertexArray->bind();
-		std::dynamic_pointer_cast<OpenGLShader>(shader)->uploadUniformMat4("u_viewProjection", s_sceneData->_viewProjectionMatrix);
-		std::dynamic_pointer_cast<OpenGLShader>(shader)->uploadUniformMat4("u_transform", transform);
+		std::dynamic_pointer_cast<OpenGLShader>(shader)->uploadUniformMat4("u_ViewProjection", s_sceneData->_viewProjectionMatrix);
+		std::dynamic_pointer_cast<OpenGLShader>(shader)->uploadUniformMat4("u_Transform", transform);
 		RenderCommand::drawIndexed(vertexArray);
 	}
 	void Renderer::onWindowResize(uint32_t width, uint32_t height)
