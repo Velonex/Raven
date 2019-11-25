@@ -18,6 +18,7 @@
 // Utils
 #include <Raven/utils/DebugTools.h>
 #include <Raven/utils/Assert.h>
+#include <Raven/utils/Instrumentor.h>
 
 // Datatypes
 
@@ -46,6 +47,7 @@
 #include <Raven/rendering/Shader.h>
 #include <Raven/rendering/Texture.h>
 #include <Raven/rendering/VertexArray.h>
+#include <Raven/rendering/Renderer2D.h>
 
 // Camera
 #include <Raven/rendering/OrthographicCamera.h>

@@ -7,3 +7,4 @@ bin-int/
 *.filter
 *.filters
 TestApp/imgui.ini
+*.json

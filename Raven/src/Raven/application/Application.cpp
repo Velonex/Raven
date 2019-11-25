@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 #include <Raven/rendering/Renderer.h>
 #include <Raven/rendering/Renderer2D.h>
+#include <Raven/utils/Instrumentor.h>
 #include <RavenLib/InitLib.h>
 
 namespace rvn {
@@ -15,6 +16,7 @@ namespace rvn {
 			LOG_ENGINE_ERROR("You first have to set the instance!");
 			return -1;
 		}
+		RVN_PROFILE_BEGIN_SESSION("Startup", "RavenProfile-Startup.json");
 		Logger::init(name);
 		initLib();
 		LOG_ENGINE_TRACE("Initializing...");
@@ -28,7 +30,7 @@ namespace rvn {
 		Renderer::init();
 		Renderer2D::init();
 		LOG_ENGINE_INFO("Successfully initialized.");
-
+		RVN_PROFILE_END_SESSION();
 		return 0;
 	}
 	void Application::run()
@@ -37,6 +39,7 @@ namespace rvn {
 			ASSERT(false, "You first have to set the instance");
 			return;
 		}
+		RVN_PROFILE_BEGIN_SESSION("Runtime", "RavenProfile-Runtime.json");
 		while (_running) {
 			float time = (float)glfwGetTime();
 			Timestep timestep = time - _lastFrameTime;
@@ -64,6 +67,7 @@ namespace rvn {
 			_imGuiLayer->endFrame();
 			_window->onUpdate();
 		}
+		RVN_PROFILE_END_SESSION();
 	}
 	int Application::quit()
 	{
@@ -71,10 +75,12 @@ namespace rvn {
 			LOG_ENGINE_ERROR("You first have to set the instance!");
 			return -1;
 		}
+		RVN_PROFILE_BEGIN_SESSION("Shutdown", "RavenProfile-Shutdown.json");
 		LOG_ENGINE_TRACE("Stopping...");
 		_layerStack->~LayerStack();
 		Renderer2D::shutdown();
 		LOG_ENGINE_INFO("Stopped.");
+		RVN_PROFILE_END_SESSION();
 		return 0;
 	}
 	void Application::onEvent(Event* e)
