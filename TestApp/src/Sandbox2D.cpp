@@ -14,9 +14,9 @@ void Sandbox2D::onAttach() {
 void Sandbox2D::onUpdate(rvn::Timestep ts) {
 	_cameraController->onUpdate(ts);
 	rvn::Renderer2D::beginScene(_cameraController->getCamera());
-	rvn::Renderer2D::drawQuad({ 0.0f, 0.0f }, { 1.0f, 1.0f }, _squareColor);
-	rvn::Renderer2D::drawQuad({ _cameraController->getCamera().getPosition().x, _cameraController->getCamera().getPosition().y, -0.1f }, { 10.0f, 10.0f }, _chess);
-	rvn::Renderer2D::drawQuad({ _cameraController->getCamera().getPosition().x, _cameraController->getCamera().getPosition().y, -0.1f }, { 10.0f, 10.0f }, _trans);
+	//rvn::Renderer2D::drawQuad({ 0.0f, 0.0f }, { 1.0f, 1.0f }, _squareColor);
+	rvn::Renderer2D::drawQuad({ _cameraController->getCamera().getPosition().x, _cameraController->getCamera().getPosition().y, -0.1f }, { 10.0f, 10.0f }, _chess, _squareColor);
+	rvn::Renderer2D::drawQuad({ _cameraController->getCamera().getPosition().x, _cameraController->getCamera().getPosition().y, 0.0f }, { 10.0f, 10.0f }, _trans);
 	rvn::Renderer2D::endScene();
 }
 

@@ -8,8 +8,8 @@ namespace rvn {
 
 	struct RenderStorage {
 		ref<VertexArray> quadVertexArray;
-		ref<Shader> flatColorShader;
 		ref<Shader> textureShader;
+		ref<Texture2D> whiteTexture;
 	};
 
 	static RenderStorage* s_data;
@@ -43,7 +43,10 @@ namespace rvn {
 
 		s_data->quadVertexArray->setIndexBuffer(sqIB);
 
-		s_data->flatColorShader = Shader::create("assets/shaders/flatColorShader.glsl");
+		s_data->whiteTexture = Texture2D::create(1, 1);
+		uint32_t texData = 0xFFFFFFFF;
+		s_data->whiteTexture->setData(&texData, 4);
+
 		s_data->textureShader = Shader::create("assets/shaders/texture.glsl");
 		s_data->textureShader->bind();
 		s_data->textureShader->setInt("u_Texture", 0);
@@ -54,8 +57,6 @@ namespace rvn {
 	}
 	void Renderer2D::beginScene(const OrthographicCamera& camera)
 	{
-		s_data->flatColorShader->bind();
-		s_data->flatColorShader->setMat4("u_ViewProjection", camera.getViewProjectionMatrix());
 		s_data->textureShader->bind();
 		s_data->textureShader->setMat4("u_ViewProjection", camera.getViewProjectionMatrix());
 	}
@@ -68,12 +69,12 @@ namespace rvn {
 	}
 	void Renderer2D::drawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
 	{
-		s_data->flatColorShader->bind();
-		s_data->flatColorShader->setFloat4("u_Color", color);
+		s_data->textureShader->setFloat4("u_Color", color);
+		s_data->whiteTexture->bind();
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) *
 			glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
-		s_data->flatColorShader->setMat4("u_Transform", transform);
+		s_data->textureShader->setMat4("u_Transform", transform);
 
 		s_data->quadVertexArray->bind();
 		RenderCommand::drawIndexed(s_data->quadVertexArray);
@@ -84,7 +85,24 @@ namespace rvn {
 	}
 	void Renderer2D::drawQuad(const glm::vec3& position, const glm::vec2& size, const ref<Texture2D>& texture)
 	{
-		s_data->textureShader->bind();
+		s_data->textureShader->setFloat4("u_Color", glm::vec4(1.0f));
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) *
+			glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+		s_data->textureShader->setMat4("u_Transform", transform);
+
+		texture->bind();
+
+		s_data->quadVertexArray->bind();
+		RenderCommand::drawIndexed(s_data->quadVertexArray);
+	}
+	void Renderer2D::drawQuad(const glm::vec2& position, const glm::vec2 & size, const ref<Texture2D>& texture, const glm::vec4 & color)
+	{
+		drawQuad({ position.x, position.y, 0.0f }, size, texture, color);
+	}
+	void Renderer2D::drawQuad(const glm::vec3& position, const glm::vec2 & size, const ref<Texture2D>& texture, const glm::vec4 & color)
+	{
+		s_data->textureShader->setFloat4("u_Color", color);
+		s_data->whiteTexture->bind();
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) *
 			glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });

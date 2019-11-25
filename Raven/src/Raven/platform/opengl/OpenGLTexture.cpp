@@ -2,7 +2,6 @@
 
 #include <stb_image.h>
 #include <Raven/utils/DebugTools.h>
-#include <glad/glad.h>
 
 rvn::OpenGLTexture2D::OpenGLTexture2D(const std::string & path)
 {
@@ -25,6 +24,9 @@ rvn::OpenGLTexture2D::OpenGLTexture2D(const std::string & path)
 		dataFormat = GL_RGB;
 	}
 
+	_internalFormat = internalFormat;
+	_format = dataFormat;
+
 	ASSERT(internalFormat & dataFormat, "Format not supported!");
 
 	glCreateTextures(GL_TEXTURE_2D, 1, &_id);
@@ -41,6 +43,23 @@ rvn::OpenGLTexture2D::OpenGLTexture2D(const std::string & path)
 	stbi_image_free(data);
 }
 
+rvn::OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t height)
+	: _width(width), _height(height)
+{
+	_internalFormat = GL_RGBA8;
+	_format = GL_RGBA;
+
+	glCreateTextures(GL_TEXTURE_2D, 1, &_id);
+	glTextureStorage2D(_id, 1, _internalFormat, _width, _height);
+
+	glTextureParameteri(_id, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTextureParameteri(_id, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+	glTextureParameteri(_id, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTextureParameteri(_id, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+}
+
 rvn::OpenGLTexture2D::~OpenGLTexture2D()
 {
 	glDeleteTextures(1, &_id);
@@ -54,6 +73,15 @@ uint32_t rvn::OpenGLTexture2D::getWidth() const
 uint32_t rvn::OpenGLTexture2D::getHeight() const
 {
 	return _height;
+}
+
+void rvn::OpenGLTexture2D::setData(void* data, uint32_t size)
+{
+#if defined (ENABLE_ASSERTS)
+	uint32_t bpp = _format == GL_RGBA ? 4 : 3;
+	ASSERT(size == (_width * _height * bpp), "Data must be entire texture");
+#endif
+	glTextureSubImage2D(_id, 0, 0, 0, _width, _height, _format, GL_UNSIGNED_BYTE, data);
 }
 
 void rvn::OpenGLTexture2D::bind(uint32_t slot) const
