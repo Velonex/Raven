@@ -111,7 +111,7 @@ namespace rvn {
 			long long start = std::chrono::time_point_cast<std::chrono::microseconds>(_startTimepoint).time_since_epoch().count();
 			long long end = std::chrono::time_point_cast<std::chrono::microseconds>(_endTimepoint).time_since_epoch().count();
 
-			uint32_t threadID = std::hash<std::thread::id>{}(std::this_thread::get_id());
+			uint32_t threadID = (uint32_t)std::hash<std::thread::id>{}(std::this_thread::get_id());
 			Instrumentor::get().writeProfile({ _name, start, end, threadID });
 
 			_stopped = true;
@@ -122,7 +122,9 @@ namespace rvn {
 		bool _stopped;
 	};
 }
+#if defined(DEBUG)
 #define RVN_PROFILE 1
+#endif
 #if RVN_PROFILE
 	#define RVN_PROFILE_BEGIN_SESSION(name, filepath) rvn::Instrumentor::get().beginSession(name, filepath)
 	#define RVN_PROFILE_END_SESSION() rvn::Instrumentor::get().endSession()
