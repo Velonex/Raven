@@ -38,9 +38,11 @@ namespace rvn {
 #define LOG_ENGINE_INFO(...)
 #define LOG_ENGINE_WARN(...)
 #define LOG_ENGINE_ERROR(...)
+#define LOG_ENGINE_CRITICAL(...)
 
 #define LOG_TRACE(...)
 #define LOG_INFO(...)
 #define LOG_WARN(...)
 #define LOG_ERROR(...)
+#define LOG_CRITICAL(...)
 #endif
