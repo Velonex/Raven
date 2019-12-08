@@ -13,8 +13,8 @@ namespace rvn {
 		virtual void onDetach() {}
 		virtual void onUpdate(Timestep ts) {}
 		virtual void onImGuiRender() {}
-		std::string& getName() const { return _name; }
+		const std::string& getName() const { return _name; }
 	private:
-		std::string& _name;
+		const std::string& _name;
 	};
 }
