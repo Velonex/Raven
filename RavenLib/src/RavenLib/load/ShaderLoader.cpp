@@ -21,13 +21,18 @@ namespace rvn {
 		if (in) {
 			in.seekg(0, std::ios::end);
 			size_t length = in.tellg();
-			file.resize(length);
-			in.seekg(0, std::ios::beg);
-			in.read(&file[0], length);
-			in.close();
+			if (length != -1) {
+				file.resize(length);
+				in.seekg(0, std::ios::beg);
+				in.read(&file[0], length);
+				in.close();
+			}
+			else {
+				LOG_LIB_ERROR("Couldn't read shader file \'{0}\'", filepath);
+			}
 		}
 		else {
-			LIB_ASSERT(false, "Couldn't open shader file");
+			LOG_LIB_ERROR("Couldn't open shader file \'{0}\'", filepath);
 		}
 		return file;
 	}

@@ -79,6 +79,7 @@ namespace rvn {
 		LOG_ENGINE_TRACE("Stopping...");
 		_layerStack->~LayerStack();
 		Renderer2D::shutdown();
+		Renderer::shutdown();
 		LOG_ENGINE_INFO("Stopped.");
 		RVN_PROFILE_END_SESSION();
 		return 0;

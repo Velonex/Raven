@@ -3,15 +3,18 @@
 #include <memory>
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/spdlog.h>
+#include <Raven/core/Core.h>
+template<typename T>
+using ref = std::shared_ptr<T>;
 namespace rvn{
 	class Logger
 	{
-		static std::shared_ptr<spdlog::logger> _engineLogger;
-		static std::shared_ptr<spdlog::logger> _appLogger;
+		static ref<spdlog::logger> _engineLogger;
+		static ref<spdlog::logger> _appLogger;
 	public:
 		static void init(char* app);
-		inline static std::shared_ptr<spdlog::logger> getEngineLogger() { return _engineLogger; }
-		inline static std::shared_ptr<spdlog::logger> getAppLogger() { return _appLogger; }
+		inline static ref<spdlog::logger> getEngineLogger() { return _engineLogger; }
+		inline static ref<spdlog::logger> getAppLogger() { return _appLogger; }
 	};
 }
 

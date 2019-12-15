@@ -28,4 +28,6 @@ namespace rvn {
 	void Renderer::init() {
 		RenderCommand::init();
 	}
+	void Renderer::shutdown() {
+	}
 }

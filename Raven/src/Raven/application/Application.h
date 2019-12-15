@@ -41,5 +41,4 @@ namespace rvn {
 		bool _minimized = false;
 		float _lastFrameTime = 0.f;
 	};
-	typedef Application NFApp;
 }

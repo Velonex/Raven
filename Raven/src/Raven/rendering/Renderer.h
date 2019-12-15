@@ -12,6 +12,7 @@ namespace rvn {
 	class Renderer {
 	public:
 		static void init();
+		static void shutdown();
 
 		static void beginScene(OrthographicCamera& camera); // TODO: Take in scene attribs
 		static void endScene();

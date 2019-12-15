@@ -3,8 +3,8 @@
 #ifndef DIST 
 namespace rvn {
 	
-	std::shared_ptr<spdlog::logger> Logger::_engineLogger;
-	std::shared_ptr<spdlog::logger> Logger::_appLogger;
+	ref<spdlog::logger> Logger::_engineLogger;
+	ref<spdlog::logger> Logger::_appLogger;
 
 	void Logger::init(char* name)
 	{
