@@ -37,36 +37,39 @@ namespace rvn {
 		return file;
 	}
 	std::vector<std::string> split(const std::string& source, const std::string& del)
-	{
-		std::vector<std::string> ret;
-		size_t pos = source.find(del, 0);
-		if (pos == std::string::npos) {
-			ret.push_back(source);
+		{
+			std::vector<std::string> ret;
+			size_t pos = source.find(del, 0);
+			if (pos == std::string::npos) {
+				ret.push_back(source);
+				return ret;
+			}
+			size_t next = 0;
+			if (pos != std::string::npos)
+				next = source.find(del, pos + 1);
+			else
+				next = source.length();
+			if (pos != 0) {
+				ret.push_back(source.substr(0, pos));
+				pos = 0;
+			}
+			else {
+				size_t split_start = del.length();
+				ret.push_back(source.substr(split_start, next - del.length()));
+			}
+			if (next == std::string::npos) {
+				pos = source.find(del);
+				ret.push_back(source.substr(pos + del.length(), source.length()));
+			}
+			while (next != std::string::npos) {
+				pos = source.find(del, pos + 1);
+				if(pos == std::string::npos) next = source.find(del, pos + 1);
+				else next = source.length();
+				next = source.find(del, pos + 1);
+				ret.push_back(source.substr(pos + del.length(), next - (pos + del.length())));
+			}
 			return ret;
 		}
-		size_t next = 0;
-		if (pos != std::string::npos)
-			next = source.find(del, pos + 1);
-		else
-			next = source.length();
-		if (pos != 0) {
-			ret.push_back(source.substr(0, pos));
-			pos = 0;
-		}
-		else {
-			size_t split_start = del.length();
-			ret.push_back(source.substr(split_start, next - del.length()));
-		}
-
-		while (next != std::string::npos) {
-			pos = source.find(del, pos + 1);
-			//if(pos == std::string::npos) next = source.find(del, pos + 1);
-			//else next = source.length();
-			next = source.find(del, pos + 1);
-			ret.push_back(source.substr(pos + del.length(), next - (pos + del.length())));
-		}
-		return ret;
-	}
 	std::unordered_map<std::string, std::string> ShaderLoader::parseSource(const std::string& source)
 	{
 		std::unordered_map<std::string, std::string> sources;
