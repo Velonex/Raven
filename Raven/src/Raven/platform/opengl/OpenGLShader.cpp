@@ -1,7 +1,6 @@
 #include "OpenGLShader.h"
 #include <vector>
 #include <glad/glad.h>
-#include <Raven/utils/DebugTools.h>
 #include <gtc/type_ptr.hpp>
 #include <RavenLib/load/ShaderLoader.h>
 
