@@ -99,7 +99,7 @@ namespace rvn {
 			glDetachShader(program, shaderIDs[i]);
 		};
 		_programId = program;
-		delete shaderIDs;
+		delete[] shaderIDs;
 	}
 
 	OpenGLShader::~OpenGLShader()
