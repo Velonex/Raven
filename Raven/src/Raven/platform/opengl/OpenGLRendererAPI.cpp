@@ -20,6 +20,13 @@ namespace rvn {
 	}
 
 	void OpenGLRendererAPI::init() {
+		#if defined (DEBUG)
+			glEnable(GL_DEBUG_OUTPUT);
+			glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+			glDebugMessageCallback(OpenGLMessageCallback, nullptr);
+
+			glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_NOTIFICATION, 0, NULL, GL_FALSE);
+		#endif
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_DEPTH_TEST);
@@ -41,7 +48,7 @@ namespace rvn {
 		case GL_DEBUG_SEVERITY_HIGH:			LOG_ENGINE_CRITICAL(message); return;
 		case GL_DEBUG_SEVERITY_MEDIUM:			LOG_ENGINE_ERROR(message); return;
 		case GL_DEBUG_SEVERITY_LOW:				LOG_ENGINE_WARN(message); return;
-		//case GL_DEBUG_SEVERITY_NOTIFICATION:	LOG_ENGINE_TRACE(message); return;
+		case GL_DEBUG_SEVERITY_NOTIFICATION:	LOG_ENGINE_TRACE(message); return;
 		}
 	}
 }

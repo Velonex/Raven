@@ -4,6 +4,7 @@
 #include <Raven/event/events/WindowEvents.h>
 #include <Raven/event/events/KeyboardEvents.h>
 #include <Raven/event/events/MouseEvents.h>
+#include <Raven/rendering/Renderer.h>
 
 namespace rvn {
 	static bool glfwInitialized = false;
@@ -34,7 +35,12 @@ namespace rvn {
 			glfwSetErrorCallback(GLFWErrorCallback);
 			glfwInitialized = true;
 		}
+		#if defined(DEBUG)
+		if (Renderer::getApi() == RendererAPI::API::OpenGL)
+			glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+		#endif
 		_window = glfwCreateWindow(props.width, props.height, props.title.c_str(), nullptr, nullptr);
+
 		_context.reset(GraphicsContext::createGraphicsContext(_window));
 		_context->init();
 		glfwSetWindowUserPointer(_window, &_windowData);
