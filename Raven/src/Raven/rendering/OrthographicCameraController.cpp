@@ -57,10 +57,10 @@ namespace rvn {
 	void OrthographicCameraController::onEvent(Event* e)
 	{
 		switch (e->getType()) {
-		case EVENT_WINDOW_RESIZE: 
+		case EventType::EVENT_WINDOW_RESIZE: 
 			onWindowResized((WindowResizeEvent*)e);
 			break;
-		case EVENT_MOUSE_SCROLLED:
+		case EventType::EVENT_MOUSE_SCROLLED:
 			onMouseScrolled((MouseScrolledEvent*)e);
 			break;
 		}

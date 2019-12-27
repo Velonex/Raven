@@ -33,7 +33,7 @@ namespace rvn {
 		std::string name;
 		ShaderDataType type;
 		uint32_t size;
-		uint32_t offset;
+		size_t offset;
 		bool normalized;
 
 		BufferElement() {}
@@ -81,7 +81,7 @@ namespace rvn {
 		std::vector<BufferElement>::const_iterator end() const { return _elements.end(); }
 	private:
 		void calculateOffsetsAndStride() {
-			uint32_t offset = 0;
+			size_t offset = 0;
 			_stride = 0;
 			for (auto& element : _elements) {
 				element.offset = offset;

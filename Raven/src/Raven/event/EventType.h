@@ -1,6 +1,7 @@
 #pragma once
+
 namespace rvn {
-	enum EventType {
+	enum class EventType {
 		ALL,
 		EVENT_TEST,
 		UNINITIALIZED,

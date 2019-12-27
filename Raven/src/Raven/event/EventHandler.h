@@ -10,7 +10,7 @@ namespace rvn {
 	public:
 		void subscribe(EventListener* clazz, EventType type) {
 			if (std::find(_subs.begin(), _subs.end(), _Subscriber(clazz, type)) != _subs.end()) {
-				LOG_ENGINE_WARN("Instance with type {} has subscribed multiple times", type);
+				LOG_ENGINE_WARN("Instance with has subscribed multiple times");
 				return;
 			}
 			_subs.push_back({ clazz, type });
