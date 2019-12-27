@@ -49,9 +49,9 @@ namespace rvn {
 			RenderCommand::clear();
 			if (!_minimized)
 			{
-				for (auto it = _layerStack->end(); it != _layerStack->begin(); )
+				for (auto it = _layerStack->rbegin(); it != _layerStack->rend(); ++it)
 				{
-					(*--it)->onUpdate(timestep);
+					(*it)->onUpdate(timestep);
 				}
 			}
 			_imGuiLayer->beginFrame();

@@ -7,7 +7,7 @@
 #include <Raven/rendering/Renderer.h>
 
 namespace rvn {
-	static bool glfwInitialized = false;
+	static uint8_t s_glfwWindowCount = 0;
 
 	static void GLFWErrorCallback(int error, const char* description)
 	{
@@ -29,17 +29,18 @@ namespace rvn {
 		
 		LOG_ENGINE_INFO("Creating Window: \"{0}\" ({1}, {2})", props.title, props.width, props.height);
 
-		if (!glfwInitialized) {
+		if (s_glfwWindowCount == 0) {
+			LOG_ENGINE_TRACE("Initializing GLFW...");
 			int success = glfwInit();
 			ASSERT(success, "Couldn't initialize GLFW!")
 			glfwSetErrorCallback(GLFWErrorCallback);
-			glfwInitialized = true;
 		}
 		#if defined(DEBUG)
 		if (Renderer::getApi() == RendererAPI::API::OpenGL)
 			glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
 		#endif
 		_window = glfwCreateWindow(props.width, props.height, props.title.c_str(), nullptr, nullptr);
+		s_glfwWindowCount++;
 
 		_context.reset(GraphicsContext::createGraphicsContext(_window));
 		_context->init();
@@ -113,6 +114,9 @@ namespace rvn {
 	void WindowsWindow::_shutdown()
 	{
 		glfwDestroyWindow(_window);
+		--s_glfwWindowCount;
+		if (s_glfwWindowCount == 0)
+			glfwTerminate();
 	}
 
 	unsigned int WindowsWindow::getWidth() const
