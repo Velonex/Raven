@@ -2,9 +2,11 @@
 
 #include <stb_image.h>
 #include <Raven/utils/Assert.h>
+#include <Raven/utils/Instrumentor.h>
 
 rvn::OpenGLTexture2D::OpenGLTexture2D(const std::string & path)
 {
+	RVN_PROFILE_FUNCTION();
 	int width, height, channels;
 	stbi_set_flip_vertically_on_load(1);
 	stbi_uc* data = stbi_load(path.c_str(), &width, &height, &channels, 0);
@@ -46,6 +48,7 @@ rvn::OpenGLTexture2D::OpenGLTexture2D(const std::string & path)
 rvn::OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t height)
 	: _width(width), _height(height)
 {
+	RVN_PROFILE_FUNCTION();
 	_internalFormat = GL_RGBA8;
 	_format = GL_RGBA;
 
@@ -77,6 +80,7 @@ uint32_t rvn::OpenGLTexture2D::getHeight() const
 
 void rvn::OpenGLTexture2D::setData(void* data, uint32_t size)
 {
+	RVN_PROFILE_FUNCTION();
 #if defined (ENABLE_ASSERTS)
 	uint32_t bpp = _format == GL_RGBA ? 4 : 3;
 	ASSERT(size == (_width * _height * bpp), "Data must be entire texture");
@@ -86,5 +90,6 @@ void rvn::OpenGLTexture2D::setData(void* data, uint32_t size)
 
 void rvn::OpenGLTexture2D::bind(uint32_t slot) const
 {
+	RVN_PROFILE_FUNCTION();
 	glBindTextureUnit(slot, _id);
 }

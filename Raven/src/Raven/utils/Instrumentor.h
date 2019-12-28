@@ -145,9 +145,9 @@ namespace rvn {
 		#define RVN_FUNC_SIG "RVN_FUNC_SIG unknown!"
 	#endif
 	#define RVN_PROFILE_BEGIN_SESSION(name, filepath) rvn::Instrumentor::get().beginSession(name, filepath)
-	#define RVN_PROFILE_END_SESSION() rvn::Instrumentor::get().endSession()
 	#define RVN_PROFILE_SCOPE(name) rvn::InstrumentationTimer timer##__LINE__(name);
 	#define RVN_PROFILE_FUNCTION() RVN_PROFILE_SCOPE(RVN_FUNC_SIG) 
+	#define RVN_PROFILE_END_SESSION() rvn::Instrumentor::get().endSession()
 #else
 	#define RVN_PROFILE_BEGIN_SESSION(name, filepath)
 	#define RVN_PROFILE_FUNCTION()

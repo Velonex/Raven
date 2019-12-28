@@ -5,6 +5,7 @@
 #include <Raven/event/events/KeyboardEvents.h>
 #include <Raven/event/events/MouseEvents.h>
 #include <Raven/rendering/Renderer.h>
+#include <Raven/utils/Instrumentor.h>
 
 namespace rvn {
 	static uint8_t s_glfwWindowCount = 0;
@@ -16,12 +17,14 @@ namespace rvn {
 
 	void WindowsWindow::onUpdate()
 	{
+		RVN_PROFILE_FUNCTION();
 		glfwPollEvents();
 		_context->swapBuffers();
 	}
 
 	void WindowsWindow::_init(const WindowProps& props)
 	{
+		RVN_PROFILE_FUNCTION();
 		_windowData.height = props.height;
 		_windowData.width = props.width;
 		_windowData.title = props.title;
@@ -39,9 +42,11 @@ namespace rvn {
 		if (Renderer::getApi() == RendererAPI::API::OpenGL)
 			glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
 		#endif
-		_window = glfwCreateWindow(props.width, props.height, props.title.c_str(), nullptr, nullptr);
-		s_glfwWindowCount++;
-
+		{
+			RVN_PROFILE_SCOPE("WindowsWindow - glfwCreateWindow");
+			_window = glfwCreateWindow(props.width, props.height, props.title.c_str(), nullptr, nullptr);
+			s_glfwWindowCount++;
+		}
 		_context.reset(GraphicsContext::createGraphicsContext(_window));
 		_context->init();
 		glfwSetWindowUserPointer(_window, &_windowData);
@@ -131,6 +136,7 @@ namespace rvn {
 
 	void WindowsWindow::setVSync(bool enabled)
 	{
+		RVN_PROFILE_FUNCTION();
 		if (enabled)
 			glfwSwapInterval(1);
 		else
@@ -158,10 +164,12 @@ namespace rvn {
 	}
 	WindowsWindow::WindowsWindow(const WindowProps& props)
 	{
+		RVN_PROFILE_FUNCTION();
 		_init(props);
 	}
 	WindowsWindow::~WindowsWindow()
 	{
+		RVN_PROFILE_FUNCTION();
 		_shutdown();
 	}
 }

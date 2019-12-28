@@ -6,6 +6,7 @@
 #include <Raven/application/Application.h>
 #include <Raven/utils/Assert.h>
 #include <Raven/logger/Logger.h>
+#include <Raven/utils/Instrumentor.h>
 
 namespace rvn {
 	OpenGLContext::OpenGLContext(GLFWwindow* window)
@@ -14,6 +15,7 @@ namespace rvn {
 	}
 	void OpenGLContext::init()
 	{
+		RVN_PROFILE_FUNCTION();
 		glfwMakeContextCurrent(_window);
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		ASSERT(status, "Couldn't initialize Glad!");
@@ -23,6 +25,7 @@ namespace rvn {
 	}
 	void OpenGLContext::swapBuffers()
 	{
+		RVN_PROFILE_FUNCTION();
 		glfwSwapBuffers(_window);
 	}
 

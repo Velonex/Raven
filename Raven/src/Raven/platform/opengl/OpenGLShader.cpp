@@ -3,10 +3,12 @@
 #include <glad/glad.h>
 #include <gtc/type_ptr.hpp>
 #include <RavenLib/load/ShaderLoader.h>
+#include <Raven/utils/Instrumentor.h>
 
 namespace rvn {
 
 	OpenGLShader::OpenGLShader(const std::string& vertexShaderSrc, const std::string& pixelShaderSrc, const std::string& name) {
+		RVN_PROFILE_FUNCTION();
 		std::unordered_map<std::string, std::string> source;
 		source["vertex"] = vertexShaderSrc;
 		source["fragment"] = pixelShaderSrc;
@@ -14,9 +16,17 @@ namespace rvn {
 		_name = name;
 	}
 	OpenGLShader::OpenGLShader(const std::string& filepath) {
+		RVN_PROFILE_FUNCTION();
 		ShaderLoader loader;
-		std::unordered_map<std::string, std::string> strSource = loader.readShaderFile(filepath);
-		compileShaders(strSource);
+		std::unordered_map<std::string, std::string> strSource;
+		{
+			RVN_PROFILE_SCOPE("Read Shaders");
+			strSource = loader.readShaderFile(filepath);
+		}
+		{
+			RVN_PROFILE_SCOPE("Compile Shaders");
+			compileShaders(strSource);
+		}
 		auto lastSlash = filepath.find_last_of("/\\");
 		lastSlash = lastSlash == std::string::npos ? 0 : lastSlash + 1;
 		auto lastDot = filepath.rfind('.');
@@ -34,6 +44,7 @@ namespace rvn {
 	}
 	void OpenGLShader::compileShaders(std::unordered_map<std::string, std::string> strSource)
 	{
+		RVN_PROFILE_FUNCTION();
 		std::unordered_map<GLenum, std::string> source;
 		for (std::pair<std::string, std::string> p : strSource) {
 			source[shaderTypeByName(p.first)] = p.second;
@@ -109,11 +120,13 @@ namespace rvn {
 
 	void OpenGLShader::bind() const
 	{
+		RVN_PROFILE_FUNCTION();
 		glUseProgram(this->_programId);
 	}
 
 	void OpenGLShader::unbind() const
 	{
+		RVN_PROFILE_FUNCTION();
 		glUseProgram(0);
 	}
 	const std::string & OpenGLShader::getName() const

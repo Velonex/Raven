@@ -2,6 +2,7 @@
 
 #include <glad/glad.h>
 #include <Raven/utils/Assert.h>
+#include <raven/utils/Instrumentor.h>
 
 namespace rvn {
 	static GLenum shaderDataTypeToOpenGLBaseType(ShaderDataType type)
@@ -26,24 +27,29 @@ namespace rvn {
 	}
 	OpenGLVertexArray::OpenGLVertexArray()
 	{
+		RVN_PROFILE_FUNCTION();
 		glCreateVertexArrays(1, &_uid);
 	}
 	OpenGLVertexArray::~OpenGLVertexArray()
 	{
+		RVN_PROFILE_FUNCTION();
 		glDeleteVertexArrays(1, &_uid);
 	}
 	void rvn::OpenGLVertexArray::bind() const
 	{
+		RVN_PROFILE_FUNCTION();
 		glBindVertexArray(_uid);
 	}
 
 	void rvn::OpenGLVertexArray::unbind() const
 	{
+		RVN_PROFILE_FUNCTION();
 		glBindVertexArray(0);
 	}
 
 	void rvn::OpenGLVertexArray::addVertexBuffer(const ref<VertexBuffer>& vertexBuffer)
 	{
+		RVN_PROFILE_FUNCTION();
 		ASSERT(vertexBuffer->getLayout().getElements().size(), "Vertex Buffer has no layout!");
 
 		glBindVertexArray(_uid);
@@ -67,6 +73,7 @@ namespace rvn {
 
 	void rvn::OpenGLVertexArray::setIndexBuffer(const ref<IndexBuffer>& indexBuffer)
 	{
+		RVN_PROFILE_FUNCTION();
 		glBindVertexArray(_uid);
 		_indexBuffer = (ref<IndexBuffer>&)indexBuffer;
 		_indexBuffer->bind();

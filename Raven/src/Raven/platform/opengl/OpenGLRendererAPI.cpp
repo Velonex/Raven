@@ -1,6 +1,7 @@
 #include "OpenGLRendererAPI.h"
 
 #include <glad/glad.h>
+#include <Raven/utils/Instrumentor.h>
 
 namespace rvn {
 
@@ -20,6 +21,7 @@ namespace rvn {
 	}
 
 	void OpenGLRendererAPI::init() {
+		RVN_PROFILE_FUNCTION();
 		#if defined (DEBUG)
 			glEnable(GL_DEBUG_OUTPUT);
 			glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
