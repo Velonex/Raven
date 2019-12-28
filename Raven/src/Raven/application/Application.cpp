@@ -12,6 +12,7 @@ namespace rvn {
 
 	int Application::init(char* name)
 	{
+		RVN_PROFILE_FUNCTION();
 		if (!_initialized) {
 			LOG_ENGINE_ERROR("You first have to set the instance!");
 			return -1;
@@ -35,12 +36,14 @@ namespace rvn {
 	}
 	void Application::run()
 	{
+		RVN_PROFILE_BEGIN_SESSION("Runtime", "RavenProfile-Runtime.json");
 		if (!_initialized) {
 			ASSERT(false, "You first have to set the instance");
 			return;
 		}
-		RVN_PROFILE_BEGIN_SESSION("Runtime", "RavenProfile-Runtime.json");
+		RVN_PROFILE_FUNCTION();
 		while (_running) {
+			RVN_PROFILE_SCOPE("RunLoop");
 			float time = (float)glfwGetTime();
 			Timestep timestep = time - _lastFrameTime;
 			_lastFrameTime = time;
@@ -49,6 +52,7 @@ namespace rvn {
 			RenderCommand::clear();
 			if (!_minimized)
 			{
+				RVN_PROFILE_SCOPE("LayerStack onUpdate");
 				for (auto it = _layerStack->rbegin(); it != _layerStack->rend(); ++it)
 				{
 					(*it)->onUpdate(timestep);
@@ -60,9 +64,12 @@ namespace rvn {
 				ImGui::Text("FPS: %f", 1 / timestep.getSeconds());
 				ImGui::End();
 			}
-			for (auto it = _layerStack->end(); it != _layerStack->begin(); )
 			{
-				(*--it)->onImGuiRender();
+				RVN_PROFILE_SCOPE("LayerStack onImGuiRender");
+				for (auto it = _layerStack->end(); it != _layerStack->begin(); )
+				{
+					(*--it)->onImGuiRender();
+				}
 			}
 			_imGuiLayer->endFrame();
 			_window->onUpdate();
@@ -76,6 +83,7 @@ namespace rvn {
 			return -1;
 		}
 		RVN_PROFILE_BEGIN_SESSION("Shutdown", "RavenProfile-Shutdown.json");
+		RVN_PROFILE_FUNCTION();
 		LOG_ENGINE_TRACE("Stopping...");
 		_layerStack->~LayerStack();
 		Renderer2D::shutdown();
@@ -86,6 +94,7 @@ namespace rvn {
 	}
 	void Application::onEvent(Event* e)
 	{
+		RVN_PROFILE_FUNCTION();
 		for (auto it = _layerStack->end(); it != _layerStack->begin(); )
 		{
 			(*--it)->onEvent(e);
@@ -103,6 +112,7 @@ namespace rvn {
 	}
 	void Application::onWindowResize(WindowResizeEvent* e)
 	{
+		RVN_PROFILE_FUNCTION();
 		if (e->getHeight() == 0 || e->getWidth() == 0) {
 			_minimized = true;
 			return;

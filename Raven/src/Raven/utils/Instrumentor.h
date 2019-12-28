@@ -36,6 +36,7 @@ namespace rvn {
 		void beginSession(const std::string& name, const std::string& filepath = "results.json")
 		{
 			_outputStream.open(filepath);
+			_profileCount = 0;
 			writeHeader();
 			_currentSession = new InstrumentationSession{ name };
 		}

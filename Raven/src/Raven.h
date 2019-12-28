@@ -3,6 +3,7 @@
 #include <Raven/core/Core.h>
 #include <Raven/application/Application.h>
 #include <Raven/logger/Logger.h>
+#include <Raven/utils/Instrumentor.h>
 
 // Event
 #include <Raven/event/Event.h>

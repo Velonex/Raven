@@ -8,6 +8,8 @@
 #include <Raven/application/Application.h>
 #include <GLFW/glfw3.h>
 
+#include <Raven/utils/Instrumentor.h>
+
 namespace rvn {
 	ImGuiLayer::ImGuiLayer() : Layer("ImGuiLayer")
 	{
@@ -18,6 +20,7 @@ namespace rvn {
 	}
 	void ImGuiLayer::onAttach()
 	{
+		RVN_PROFILE_FUNCTION();
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -46,6 +49,7 @@ namespace rvn {
 	}
 	void ImGuiLayer::onDetach()
 	{
+		RVN_PROFILE_FUNCTION();
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
 		ImGui::DestroyContext();
@@ -55,12 +59,14 @@ namespace rvn {
 	}
 	void ImGuiLayer::beginFrame()
 	{
+		RVN_PROFILE_FUNCTION();
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 	}
 	void ImGuiLayer::endFrame()
 	{
+		RVN_PROFILE_FUNCTION();
 		ImGuiIO& io = ImGui::GetIO();
 #pragma warning(push)
 #pragma warning(disable : 4244)

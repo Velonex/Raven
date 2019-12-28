@@ -2,6 +2,7 @@
 
 #include <Raven/application/Input.h>
 #include <Raven/application/KeyCodes.h>
+#include <Raven/utils/Instrumentor.h>
 
 namespace rvn {
 
@@ -12,6 +13,7 @@ namespace rvn {
 
 	void OrthographicCameraController::onUpdate(Timestep ts)
 	{
+		RVN_PROFILE_FUNCTION();
 		if (Input::isKeyPressed(KEY_A))
 		{
 			_cameraPosition.x -= cos(glm::radians(_rotation)) * _translationSpeed * ts;
@@ -56,6 +58,7 @@ namespace rvn {
 
 	void OrthographicCameraController::onEvent(Event* e)
 	{
+		RVN_PROFILE_FUNCTION();
 		switch (e->getType()) {
 		case EventType::EVENT_WINDOW_RESIZE: 
 			onWindowResized((WindowResizeEvent*)e);
@@ -68,6 +71,7 @@ namespace rvn {
 
 	void OrthographicCameraController::onMouseScrolled(MouseScrolledEvent* e)
 	{
+		RVN_PROFILE_FUNCTION();
 		_zoomLevel -= e->getYOffset() * 0.25f;
 		_zoomLevel = glm::max(_zoomLevel, 0.25f);
 		_camera.setProjection(-_aspectRatio * _zoomLevel, _aspectRatio * _zoomLevel, -_zoomLevel, _zoomLevel);
@@ -75,6 +79,7 @@ namespace rvn {
 
 	void OrthographicCameraController::onWindowResized(WindowResizeEvent* e)
 	{
+		RVN_PROFILE_FUNCTION();
 		_aspectRatio = (float)e->getWidth() / (float)e->getHeight();
 		_camera.setProjection(-_aspectRatio * _zoomLevel, _aspectRatio * _zoomLevel, -_zoomLevel, _zoomLevel);
 	}
