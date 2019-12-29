@@ -28,13 +28,13 @@ namespace rvn {
 	}
 
 	struct BufferElement {
-		std::string name;
-		ShaderDataType type;
-		uint32_t size;
-		size_t offset;
-		bool normalized;
+		std::string name = "Default";
+		ShaderDataType type = ShaderDataType::None;
+		uint32_t size = 0;
+		size_t offset = 0;
+		bool normalized = false;
 
-		BufferElement() {}
+		//BufferElement() = default;
 
 		BufferElement(ShaderDataType type, std::string& name, bool normalized = false) : name(name), type(type), offset(0), size(shaderDataTypeSize(type)), normalized(normalized) {}
 		BufferElement(ShaderDataType type, const char* name, bool normalized = false) : name(name), type(type), offset(0), size(shaderDataTypeSize(type)), normalized(normalized) {}
