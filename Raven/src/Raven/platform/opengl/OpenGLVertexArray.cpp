@@ -1,8 +1,8 @@
+#include <pch.h>
 #include "OpenGLVertexArray.h"
 
 #include <glad/glad.h>
 #include <Raven/utils/Assert.h>
-#include <raven/utils/Instrumentor.h>
 
 namespace rvn {
 	static GLenum shaderDataTypeToOpenGLBaseType(ShaderDataType type)

@@ -1,9 +1,7 @@
 #pragma once
 
-#include <string>
 #include <glm.hpp>
 #include <Raven/core/Core.h>
-#include <unordered_map>
 
 namespace rvn {
 

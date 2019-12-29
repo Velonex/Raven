@@ -1,3 +1,4 @@
+#include <pch.h>
 #include "OpenGLContext.h"
 
 #include <glad/glad.h>
@@ -5,8 +6,6 @@
 #include <GL/GL.h>
 #include <Raven/application/Application.h>
 #include <Raven/utils/Assert.h>
-#include <Raven/logger/Logger.h>
-#include <Raven/utils/Instrumentor.h>
 
 namespace rvn {
 	OpenGLContext::OpenGLContext(GLFWwindow* window)

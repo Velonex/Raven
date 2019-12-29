@@ -1,9 +1,8 @@
+#include <pch.h>
 #include "OpenGLShader.h"
-#include <vector>
 #include <glad/glad.h>
 #include <gtc/type_ptr.hpp>
 #include <RavenLib/load/ShaderLoader.h>
-#include <Raven/utils/Instrumentor.h>
 
 namespace rvn {
 

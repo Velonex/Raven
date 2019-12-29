@@ -41,6 +41,9 @@ project "Raven"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 	
+	pchheader "pch.h"
+	pchsource "Raven/src/pch.cpp"
+	
 	files
 	{
 		"%{prj.name}/src/**.h",

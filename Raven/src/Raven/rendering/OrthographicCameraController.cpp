@@ -1,9 +1,8 @@
+#include <pch.h>
 #include "OrthographicCameraController.h"
 
 #include <Raven/application/Input.h>
 #include <Raven/application/KeyCodes.h>
-#include <Raven/utils/Instrumentor.h>
-
 namespace rvn {
 
 	OrthographicCameraController::OrthographicCameraController(float aspectRatio, bool rotation)

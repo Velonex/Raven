@@ -1,5 +1,4 @@
 #pragma once
-#include <string>
 #include <Raven/event/Event.h>
 #include <Raven/core/Timestep.h>
 namespace rvn {

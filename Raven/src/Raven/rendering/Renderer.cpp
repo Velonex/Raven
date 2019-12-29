@@ -1,8 +1,8 @@
+#include <pch.h>
 #include "Renderer.h"
 #include <Raven/platform/opengl/OpenGLShader.h>
 #include <Raven/utils/Assert.h>
 #include <glad/glad.h>
-#include <Raven/utils/Instrumentor.h>
 
 namespace rvn {
 	scope<Renderer::SceneData> Renderer::s_sceneData = createScope<SceneData>();

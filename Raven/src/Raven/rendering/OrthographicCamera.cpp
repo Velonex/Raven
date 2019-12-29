@@ -1,7 +1,7 @@
+#include <pch.h>
 #include "OrthographicCamera.h"
 
 #include <gtc/matrix_transform.hpp>
-#include <Raven/utils/Instrumentor.h>
 
 namespace rvn {
 	OrthographicCamera::OrthographicCamera(float left, float right, float bottom, float top)

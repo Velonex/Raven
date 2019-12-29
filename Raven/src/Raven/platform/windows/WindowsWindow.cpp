@@ -1,3 +1,4 @@
+#include <pch.h>
 #include "WindowsWindow.h"
 #include <Raven/utils/Assert.h>
 #include <Raven/application/Application.h>
@@ -5,7 +6,6 @@
 #include <Raven/event/events/KeyboardEvents.h>
 #include <Raven/event/events/MouseEvents.h>
 #include <Raven/rendering/Renderer.h>
-#include <Raven/utils/Instrumentor.h>
 
 namespace rvn {
 	static uint8_t s_glfwWindowCount = 0;

@@ -1,8 +1,8 @@
+#include <pch.h>
 #include "OpenGLTexture.h"
 
 #include <stb_image.h>
 #include <Raven/utils/Assert.h>
-#include <Raven/utils/Instrumentor.h>
 
 rvn::OpenGLTexture2D::OpenGLTexture2D(const std::string & path)
 {

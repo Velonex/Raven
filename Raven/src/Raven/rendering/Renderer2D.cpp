@@ -1,9 +1,9 @@
+#include <pch.h>
 #include "Renderer2D.h"
 #include <Raven/rendering/VertexArray.h>
 #include <Raven/rendering/Shader.h>
 #include <Raven/rendering/RenderCommand.h>
 #include <gtc/matrix_transform.hpp>
-#include <Raven/utils/Instrumentor.h>
 
 namespace rvn {
 
