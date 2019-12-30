@@ -21,6 +21,7 @@ namespace rvn {
 				if ((e->getType() == _subs[i].type || _subs[i].type == rvn::EventType::ALL) && e->getType() != rvn::EventType::UNINITIALIZED) {
 					_subs[i].clazz->onEvent(e);
 				}
+				if (e->handled) break;
 			}
 			delete e;
 		}

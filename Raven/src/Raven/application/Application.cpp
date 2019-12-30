@@ -99,6 +99,8 @@ namespace rvn {
 		for (auto it = _layerStack->end(); it != _layerStack->begin(); )
 		{
 			(*--it)->onEvent(e);
+			if (e->handled)
+				break;
 		}
 		switch (e->getType()) {
 		case EventType::EVENT_WINDOW_CLOSE:

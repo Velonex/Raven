@@ -5,13 +5,14 @@ namespace rvn {
 	class Event {
 	public:
 		Event(EventType type, char* name) {
-			this->name = name;
-			this->type = type;
+			this->_name = name;
+			this->_type = type;
 		}
-		char* getName() { return name; }
-		EventType getType() { return type; }
+		char* getName() { return _name; }
+		EventType getType() { return _type; }
+		bool handled = false;
 	private:
-		char* name;
-		EventType type;
+		char* _name;
+		EventType _type;
 	};
 }
