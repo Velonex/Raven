@@ -49,7 +49,7 @@ namespace rvn {
 		uint32_t texData = 0xFFFFFFFF;
 		s_data->whiteTexture->setData(&texData, 4);
 
-		s_data->textureShader = Shader::create("assets/shaders/texture.glsl");
+		s_data->textureShader = Shader::create("assets/shaders/2DRendererShader.glsl");
 		s_data->textureShader->bind();
 		s_data->textureShader->setInt("u_Texture", 0);
 	}
