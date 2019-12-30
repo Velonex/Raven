@@ -81,10 +81,8 @@ uint32_t rvn::OpenGLTexture2D::getHeight() const
 void rvn::OpenGLTexture2D::setData(void* data, uint32_t size)
 {
 	RVN_PROFILE_FUNCTION();
-#if defined (ENABLE_ASSERTS)
 	uint32_t bpp = _format == GL_RGBA ? 4 : 3;
 	ASSERT(size == (_width * _height * bpp), "Data must be entire texture");
-#endif
 	glTextureSubImage2D(_id, 0, 0, 0, _width, _height, _format, GL_UNSIGNED_BYTE, data);
 }
 

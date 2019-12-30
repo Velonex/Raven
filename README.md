@@ -4,5 +4,5 @@ Raven is going to be a game engine for Windows and maybe other platforms. It wil
 
 ## Cloning
 
-Clone command:
+Clone command:  
 `git clone https://github.com/Velonex/Raven --recursive`

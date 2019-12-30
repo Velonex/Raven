@@ -70,8 +70,8 @@ namespace rvn {
 				glDeleteShader(shader);
 
 				LOG_ENGINE_ERROR("{0}", infoLog.data());
-				ASSERT(false, "Vertex Shader compilation failed!")
-					return;
+				ASSERT(false, "Vertex Shader compilation failed!");
+				return;
 			}
 			shaderIDs[counter] = shader;
 			counter++;
@@ -100,8 +100,8 @@ namespace rvn {
 			};
 
 			LOG_ENGINE_ERROR("{0}", infoLog.data());
-			ASSERT(false, "Shader linking failed!")
-				return;
+			ASSERT(false, "Shader linking failed!");
+			return;
 		}
 
 		for (GLuint i = 0; i < counter; i++) {

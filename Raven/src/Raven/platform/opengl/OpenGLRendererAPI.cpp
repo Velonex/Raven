@@ -5,7 +5,7 @@
 
 namespace rvn {
 
-	void OpenGLRendererAPI::setClearColorRGBA(const glm::vec4 & color)
+	void OpenGLRendererAPI::setClearColorRGBA(const glm::vec4& color)
 	{
 		glClearColor(color.r, color.g, color.b, color.a);
 	}

@@ -37,7 +37,7 @@ namespace rvn {
 		if (s_glfwWindowCount == 0) {
 			LOG_ENGINE_TRACE("Initializing GLFW...");
 			int success = glfwInit();
-			ASSERT(success, "Couldn't initialize GLFW!")
+			ASSERT(success, "Couldn't initialize GLFW!");
 			glfwSetErrorCallback(GLFWErrorCallback);
 		}
 		#if defined(DEBUG)
