@@ -13,14 +13,14 @@ namespace rvn {
 	{
 	}
 
-	bool WindowsInput::_isKeyPressed(int keyCode)
+	bool WindowsInput::_isKeyPressed(KeyCode keyCode)
 	{
-		return glfwGetKey(_window, keyCode) == GLFW_PRESS;
+		return glfwGetKey(_window, (int)keyCode) == GLFW_PRESS;
 	}
 
-	bool WindowsInput::_isMousePressed(int mouseCode)
+	bool WindowsInput::_isMousePressed(MouseCode mouseCode)
 	{
-		return glfwGetMouseButton(_window, mouseCode) == GLFW_PRESS;
+		return glfwGetMouseButton(_window, (int)mouseCode) == GLFW_PRESS;
 	}
 
 	float WindowsInput::_getMouseX()

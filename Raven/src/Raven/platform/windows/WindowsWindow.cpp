@@ -6,6 +6,8 @@
 #include <Raven/event/events/KeyboardEvents.h>
 #include <Raven/event/events/MouseEvents.h>
 #include <Raven/rendering/Renderer.h>
+#include <Raven/application/KeyCodes.h>
+#include <Raven/application/MouseCodes.h>
 
 namespace rvn {
 	static uint8_t s_glfwWindowCount = 0;
@@ -66,24 +68,24 @@ namespace rvn {
 		});
 		glfwSetCharCallback(_window, [](GLFWwindow* window, unsigned int keycode) {
 			_WindowData& data = *(_WindowData*)glfwGetWindowUserPointer(window);
-			KeyTypedEvent* event = new KeyTypedEvent(keycode);
+			KeyTypedEvent* event = new KeyTypedEvent(static_cast<KeyCode>(keycode));
 			data.handler->dispatchEvent(event);
 		});
 		glfwSetKeyCallback(_window, [](GLFWwindow* window, int keycode, int scancode, int action, int mods) {
 			_WindowData& data = *(_WindowData*)glfwGetWindowUserPointer(window);
 			switch (action) {
 			case GLFW_PRESS: {
-				KeyPressedEvent* ev = new KeyPressedEvent(keycode, 0);
+				KeyPressedEvent* ev = new KeyPressedEvent(static_cast<KeyCode>(keycode), 0);
 				data.handler->dispatchEvent(ev);
 				break;
 			}
 			case GLFW_REPEAT: {
-				KeyPressedEvent* ev = new KeyPressedEvent(keycode, 1);
+				KeyPressedEvent* ev = new KeyPressedEvent(static_cast<KeyCode>(keycode), 1);
 				data.handler->dispatchEvent(ev);
 				break;
 			}
 			case GLFW_RELEASE: {
-				KeyReleasedEvent* ev = new KeyReleasedEvent(keycode);
+				KeyReleasedEvent* ev = new KeyReleasedEvent(static_cast<KeyCode>(keycode));
 				data.handler->dispatchEvent(ev);
 				break;
 			}
@@ -93,12 +95,12 @@ namespace rvn {
 			_WindowData& data = *(_WindowData*)glfwGetWindowUserPointer(window);
 			switch (action) {
 			case GLFW_PRESS: {
-				MouseButtonPressedEvent* event = new MouseButtonPressedEvent(button);
+				MouseButtonPressedEvent* event = new MouseButtonPressedEvent(static_cast<MouseCode>(button));
 				data.handler->dispatchEvent(event);
 				break;
 			}
 			case GLFW_RELEASE: {
-				MouseButtonReleasedEvent* event = new MouseButtonReleasedEvent(button);
+				MouseButtonReleasedEvent* event = new MouseButtonReleasedEvent(static_cast<MouseCode>(button));
 				data.handler->dispatchEvent(event);
 				break;
 			}

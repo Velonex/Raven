@@ -1,5 +1,7 @@
 #pragma once
 #include <Raven\event\Event.h>
+#include <Raven/application/MouseCodes.h>
+
 namespace rvn {
 	class MouseMovedEvent : public Event {
 	public:
@@ -19,17 +21,17 @@ namespace rvn {
 	};
 	class MouseEvent : public Event {
 	public:
-		inline int getMouseButton() const { return _button; }
+		inline MouseCode getMouseButton() const { return _button; }
 	protected:
-		MouseEvent(int button, EventType type, char* name) : Event(type, name), _button(button) {}
-		int _button;
-	};
-	class MouseButtonReleasedEvent : public MouseEvent {
-	public:
-		MouseButtonReleasedEvent(int button) : MouseEvent(button, EventType::EVENT_MOUSE_BUTTON_RELEASED, "MouseReleasedEvent") { }
+		MouseEvent(MouseCode button, EventType type, char* name) : Event(type, name), _button(button) {}
+		MouseCode _button;
 	};
 	class MouseButtonPressedEvent : public MouseEvent {
 	public:
-		MouseButtonPressedEvent(int button) : MouseEvent(button, EventType::EVENT_MOUSE_BUTTON_PRESSED, "MousePressedEvent") { }
+		MouseButtonPressedEvent(MouseCode button) : MouseEvent(button, EventType::EVENT_MOUSE_BUTTON_PRESSED, "MousePressedEvent") { }
+	};
+	class MouseButtonReleasedEvent : public MouseEvent {
+	public:
+		MouseButtonReleasedEvent(MouseCode button) : MouseEvent(button, EventType::EVENT_MOUSE_BUTTON_RELEASED, "MouseReleasedEvent") { }
 	};
 }

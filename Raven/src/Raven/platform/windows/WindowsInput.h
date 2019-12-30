@@ -11,8 +11,8 @@ namespace rvn {
 		WindowsInput();
 		~WindowsInput();
 	protected:
-		virtual bool _isKeyPressed(int keyCode) override;
-		virtual bool _isMousePressed(int mouseCode) override;
+		virtual bool _isKeyPressed(KeyCode keyCode) override;
+		virtual bool _isMousePressed(MouseCode button) override;
 		virtual float _getMouseX() override;
 		virtual float _getMouseY() override;
 		virtual std::pair<float, float> _getMousePos() override;
