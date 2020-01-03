@@ -17,4 +17,5 @@ private:
 	ref<rvn::OrthographicCameraController> _cameraController;
 	glm::vec4 _squareColor = { 0.9f, 0.2f, 0.7f, 1.0f };
 	ref<rvn::Texture2D> _chess, _trans;
+	float _tilingFactor = 1.0f;
 };

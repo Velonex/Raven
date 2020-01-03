@@ -2,6 +2,7 @@
 
 #include <glm.hpp>
 #include <Raven/core/Core.h>
+#include <unordered_map>
 
 namespace rvn {
 
@@ -19,6 +20,7 @@ namespace rvn {
 
 		// Uniforms
 		virtual void setInt(const std::string& name, int value) = 0;
+		virtual void setFloat(const std::string& name, float value) = 0;
 		virtual void setFloat3(const std::string& name, const glm::vec3& value) = 0;
 		virtual void setFloat4(const std::string& name, const glm::vec4& value) = 0;
 		virtual void setMat3(const std::string& name, const glm::mat3& value) = 0;
