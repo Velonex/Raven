@@ -2,12 +2,7 @@
 #include <Sandbox.h>
 #include <Sandbox2D.h>
 
-class TestApp : public rvn::Application {
-};
-
-TestApp app;
-
-
+rvn::Application app;
 
 int main() {
 	app.setInstance(&app);
