@@ -5,7 +5,6 @@
 #include <Raven/rendering/Renderer.h>
 #include <Raven/rendering/Renderer2D.h>
 #include <Raven/utils/Instrumentor.h>
-#include <RavenLib/InitLib.h>
 
 namespace rvn {
 	Application* Application::_app = nullptr;
@@ -20,7 +19,6 @@ namespace rvn {
 		}
 		RVN_PROFILE_BEGIN_SESSION("Startup", "RavenProfile-Startup.json");
 		Logger::init(name);
-		initLib();
 		LOG_ENGINE_TRACE("Initializing...");
 		_eventHandler = createScope<EventHandler>();
 		WindowProps props(1280, 720, name);

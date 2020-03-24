@@ -2,7 +2,7 @@
 #include "OpenGLShader.h"
 #include <glad/glad.h>
 #include <gtc/type_ptr.hpp>
-#include <RavenLib/load/ShaderLoader.h>
+#include <Raven/utils/ShaderLoader.h>
 
 namespace rvn {
 

@@ -8,6 +8,7 @@
 # Raven files
 *.json
 TestApp/imgui.ini
+*.log
 
 # Binaries
 **/bin/

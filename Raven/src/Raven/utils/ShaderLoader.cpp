@@ -1,9 +1,10 @@
+#include <pch.h>
 #include "ShaderLoader.h"
 #include <fstream>
 #include <iostream>
-#include <RavenLib/utils/LibAssert.h>
 #include <sstream>
 #include <string>
+#include "Assert.h"
 
 namespace rvn {
 	std::unordered_map<std::string, std::string> ShaderLoader::readShaderFile(const std::string& filepath)
@@ -28,11 +29,11 @@ namespace rvn {
 				in.close();
 			}
 			else {
-				LOG_LIB_ERROR("Couldn't read shader file \'{0}\'", filepath);
+				LOG_ENGINE_ERROR("Couldn't read shader file \'{0}\'", filepath);
 			}
 		}
 		else {
-			LOG_LIB_ERROR("Couldn't open shader file \'{0}\'", filepath);
+			LOG_ENGINE_ERROR("Couldn't open shader file \'{0}\'", filepath);
 		}
 		return file;
 	}
@@ -54,7 +55,7 @@ namespace rvn {
 		std::unordered_map<std::string, std::string> sources;
 		const char* token = "#type ";
 		std::vector<std::string> vec = split(source, token);
-		LIB_ASSERT(vec.size() != 1, "Syntax error");
+		ASSERT(vec.size() == 1, "Syntax error");
 		if (source.find("#type ") != 0) {
 			vec.erase(vec.begin());
 		}
