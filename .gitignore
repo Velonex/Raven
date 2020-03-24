@@ -1,10 +1,15 @@
-*.user
-.vs/
-bin/
-bin-int/
-*.sln
+# Visual studio files and folders
+*.vcxproj.user
 *.vcxproj
-*.filter
-*.filters
-TestApp/imgui.ini
+*.vcxproj.filters
+*.sln
+.vs/
+
+# Raven files
 *.json
+TestApp/imgui.ini
+
+# Binaries
+**/bin/
+!vendor/bin/premake/
+bin-int/
