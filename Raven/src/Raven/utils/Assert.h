@@ -2,7 +2,6 @@
 #include <Raven/logger/Logger.h>
 #include "DebugBreak.h"
 
-#if defined(RAVEN_ASSERT_INCLUDE_HEADER)
 #if defined(DEBUG)
 	#define ENABLE_ASSERTS
 #endif
@@ -17,7 +16,4 @@
 		RVN_DEBUGBREAK();}}
 #else
 	#define ASSERT(x, ...)
-#endif
-#else
-#error Include this file via Core.h
 #endif

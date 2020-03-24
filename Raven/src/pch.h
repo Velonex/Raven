@@ -16,6 +16,7 @@
 #include <Raven/logger/Logger.h>
 
 #include <Raven/utils/Instrumentor.h>
+#include <Raven/utils/Assert.h>
 
 #if defined(PLATFORM_WINDOWS) 
 	#include <Windows.h>

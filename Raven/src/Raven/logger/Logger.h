@@ -3,8 +3,7 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/spdlog.h>
 #include <Raven/core/Core.h>
-template<typename T>
-using ref = std::shared_ptr<T>;
+
 namespace rvn{
 	class Logger
 	{

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Raven/core/Core.h>
+#include <Raven/utils/Assert.h>
 #include <initializer_list>
 
 namespace rvn {

@@ -42,10 +42,6 @@
 	#error "Unknown platform!"
 #endif // End of platform detection
 
-#define RAVEN_ASSERT_INCLUDE_HEADER
-#include <Raven/utils/Assert.h>
-#undef RAVEN_ASSERT_INCLUDE_HEADER
-
 template<typename T>
 using ref = std::shared_ptr<T>;
 
