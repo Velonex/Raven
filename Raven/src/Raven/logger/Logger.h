@@ -1,17 +1,18 @@
 #pragma once
-#ifndef DIST
 #include <spdlog/spdlog.h>
 #include <Raven/core/Core.h>
+
+#ifndef DIST
 
 namespace rvn{
 	class Logger
 	{
-		static ref<spdlog::logger> _engineLogger;
-		static ref<spdlog::logger> _appLogger;
+		static ref<spdlog::logger> s_engineLogger;
+		static ref<spdlog::logger> s_appLogger;
 	public:
 		static void init(char* app);
-		inline static ref<spdlog::logger> getEngineLogger() { return _engineLogger; }
-		inline static ref<spdlog::logger> getAppLogger() { return _appLogger; }
+		inline static ref<spdlog::logger> getEngineLogger() { return s_engineLogger; }
+		inline static ref<spdlog::logger> getAppLogger() { return s_appLogger; }
 	};
 }
 
@@ -26,7 +27,9 @@ namespace rvn{
 #define LOG_WARN(...)	      ::rvn::Logger::getAppLogger()->warn(__VA_ARGS__)
 #define LOG_ERROR(...)	      ::rvn::Logger::getAppLogger()->error(__VA_ARGS__)
 #define LOG_CRITICAL(...)     ::rvn::Logger::getAppLogger()->critical(__VA_ARGS__)
+
 #else
+
 namespace rvn {
 	class Logger
 	{
@@ -45,4 +48,5 @@ namespace rvn {
 #define LOG_WARN(...)
 #define LOG_ERROR(...)
 #define LOG_CRITICAL(...)
+
 #endif
