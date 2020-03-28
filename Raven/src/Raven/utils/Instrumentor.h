@@ -1,19 +1,22 @@
 #pragma once
 
-#include <string>
-#include <chrono>
 #include <algorithm>
+#include <chrono>
 #include <fstream>
-
+#include <iomanip>
+#include <string>
 #include <thread>
+#include <sstream>
 
 namespace rvn {
+
+	using FloatingPointMicroseconds = std::chrono::duration<double, std::micro>;
 
 	struct ProfileResult
 	{
 		std::string name;
 		long long start, end;
-		uint32_t threadID;
+		std::thread::id threadID;
 	};
 
 	struct InstrumentationSession
@@ -26,54 +29,73 @@ namespace rvn {
 	private:
 		InstrumentationSession* _currentSession;
 		std::ofstream _outputStream;
-		int _profileCount;
+		std::mutex _mutex;
 	public:
 		Instrumentor()
-			: _currentSession(nullptr), _profileCount(0)
+			: _currentSession(nullptr)
 		{
 		}
 
 		void beginSession(const std::string& name, const std::string& filepath = "results.json")
 		{
+			std::lock_guard lock(_mutex);
+			if (_currentSession) {
+				if (Logger::getEngineLogger()) {
+					LOG_ENGINE_ERROR("Instrumentor::BeginSession('{0}') when session '{1}' already open.", name, _currentSession->name);
+				}
+				internalEndSession();
+			}
 			_outputStream.open(filepath);
-			_profileCount = 0;
-			writeHeader();
 			_currentSession = new InstrumentationSession{ name };
+			if (_outputStream.is_open()) {
+				_currentSession = new InstrumentationSession({ name });
+				writeHeader();
+			}
+			else {
+				if (Logger::getEngineLogger()) {
+					LOG_ENGINE_ERROR("Instrumentor could not open results file '{0}'.", filepath);
+				}
+			}
 		}
 
 		void endSession()
 		{
-			writeFooter();
-			_outputStream.close();
-			delete _currentSession;
-			_currentSession = nullptr;
-			_profileCount = 0;
+			std::lock_guard lock(_mutex);
+			internalEndSession();
 		}
-
 		void writeProfile(const ProfileResult& result)
 		{
-			if (_profileCount++ > 0)
-				_outputStream << ",";
+			std::stringstream json;
 
 			std::string name = result.name;
 			std::replace(name.begin(), name.end(), '"', '\'');
 
-			_outputStream << "{";
-			_outputStream << "\"cat\":\"function\",";
-			_outputStream << "\"dur\":" << (result.end - result.start) << ',';
-			_outputStream << "\"name\":\"" << name << "\",";
-			_outputStream << "\"ph\":\"X\",";
-			_outputStream << "\"pid\":0,";
-			_outputStream << "\"tid\":" << result.threadID << ",";
-			_outputStream << "\"ts\":" << result.start;
-			_outputStream << "}";
+			json << ",{";
+			json << "\"cat\":\"function\",";
+			json << "\"dur\":" << (result.end - result.start) << ',';
+			json << "\"name\":\"" << name << "\",";
+			json << "\"ph\":\"X\",";
+			json << "\"pid\":0,";
+			json << "\"tid\":" << result.threadID << ",";
+			json << "\"ts\":" << result.start;
+			json << "}";
 
-			_outputStream.flush();
+			std::lock_guard lock(_mutex);
+			if (_currentSession) {
+				_outputStream << json.str();
+				_outputStream.flush();
+			}
+		}
+		static Instrumentor& get()
+		{
+			static Instrumentor instance;
+			return instance;
 		}
 
+	private:
 		void writeHeader()
 		{
-			_outputStream << "{\"otherData\": {},\"traceEvents\":[";
+			_outputStream << "{\"otherData\": {},\"traceEvents\":[{}";
 			_outputStream.flush();
 		}
 
@@ -82,11 +104,13 @@ namespace rvn {
 			_outputStream << "]}";
 			_outputStream.flush();
 		}
-
-		static Instrumentor& get()
-		{
-			static Instrumentor instance;
-			return instance;
+		void internalEndSession() {
+			if (_currentSession) {
+				writeFooter();
+				_outputStream.close();
+				delete _currentSession;
+				_currentSession = nullptr;
+			}
 		}
 	};
 
@@ -112,7 +136,7 @@ namespace rvn {
 			long long start = std::chrono::time_point_cast<std::chrono::microseconds>(_startTimepoint).time_since_epoch().count();
 			long long end = std::chrono::time_point_cast<std::chrono::microseconds>(_endTimepoint).time_since_epoch().count();
 
-			uint32_t threadID = (uint32_t)std::hash<std::thread::id>{}(std::this_thread::get_id());
+			std::thread::id threadID = std::this_thread::get_id();
 			Instrumentor::get().writeProfile({ _name, start, end, threadID });
 
 			_stopped = true;

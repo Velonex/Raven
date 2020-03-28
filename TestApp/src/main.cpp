@@ -7,7 +7,7 @@ rvn::Application app;
 int main() {
 	app.setInstance(&app);
 	app.init((char*)"TestApp");
-	auto* lyr = new Sandbox2D();
+	auto lyr = new Sandbox2D();
 	app.getLayerStack()->pushOverlay(lyr);
 	app.run();
 	return app.quit();

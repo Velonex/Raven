@@ -86,24 +86,6 @@ namespace rvn {
 		s_data->quadVertexArray->bind();
 		RenderCommand::drawIndexed(s_data->quadVertexArray);
 	}
-	void Renderer2D::drawQuad(const glm::vec2& position, const glm::vec2& size, const ref<Texture2D>& texture, float tilingFactor)
-	{
-		drawQuad({ position.x, position.y, 0.0f }, size, texture, tilingFactor);
-	}
-	void Renderer2D::drawQuad(const glm::vec3& position, const glm::vec2& size, const ref<Texture2D>& texture, float tilingFactor)
-	{
-		RVN_PROFILE_FUNCTION();
-		s_data->textureShader->setFloat("u_TilingFactor", tilingFactor);
-		s_data->textureShader->setFloat4("u_Color", glm::vec4(1.0f));
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) *
-			glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
-		s_data->textureShader->setMat4("u_Transform", transform);
-
-		texture->bind();
-
-		s_data->quadVertexArray->bind();
-		RenderCommand::drawIndexed(s_data->quadVertexArray);
-	}
 	void Renderer2D::drawQuad(const glm::vec2& position, const glm::vec2& size, const ref<Texture2D>& texture, const glm::vec4& color, float tilingFactor)
 	{
 		drawQuad({ position.x, position.y, 0.0f }, size, texture, color, tilingFactor);

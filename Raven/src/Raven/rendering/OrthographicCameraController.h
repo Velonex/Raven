@@ -11,7 +11,7 @@ namespace rvn {
 
 	class OrthographicCameraController {
 	public:
-		OrthographicCameraController(float aspectRatio, bool rotation = false);
+		OrthographicCameraController(float aspectRatio, bool allowRotation = false);
 
 		void onEvent(Event* e);
 		void onUpdate(Timestep ts);
